@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-from tddspry.django.cases import DatabaseTestCase
 from django.contrib.auth.models import User
-
+from tddspry.django.cases import DatabaseTestCase
+from django_webtest import WebTest
 
 class AdminUserTest(DatabaseTestCase):
     
@@ -18,4 +18,8 @@ class AdminUserTest(DatabaseTestCase):
         
         self.assert_equal(admin.username, self.USERNAME)
         self.assert_equal(admin.password, self.PASSWORD)
+
+class TestMainPage(WebTest):
     
+    def test_main_page(self):
+        self.app.get('/')    
