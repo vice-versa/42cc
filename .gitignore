@@ -3,3 +3,5 @@
 .settings
 master
 *.pyc
+test_panov
+panov/media/admin_tools
