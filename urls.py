@@ -17,9 +17,9 @@ urlpatterns = patterns('42cc.views',
 """
 urlpatterns = patterns('',
     url(r'^admin_tools/', include('admin_tools.urls')),
-    (r'^admin/', include(admin.site.urls)),
+    url(r'^admin/', include(admin.site.urls)),
 
-#    (r'^', include('tinymce_images.urls')),
+    url(r'^', include('panov.urls')),
 
     # static files
     (r'^assets/admin_tools/(?P<path>.*)$', 'django.views.static.serve',

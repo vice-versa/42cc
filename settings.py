@@ -62,14 +62,6 @@ ADMIN_MEDIA_PREFIX = '/media/'
 SECRET_KEY = 'zzxpn(ktv8jg6+son708$h$79q0kye&)f^fn7bep92u5)qp61_'
 
 
-TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
-    os.path.join(DIRNAME, 'panov', 'templates'),
-    
-)
-
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
     ('django.template.loaders.cached.Loader', (
