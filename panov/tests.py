@@ -19,7 +19,10 @@ class AdminUserTest(DatabaseTestCase):
         self.assert_equal(admin.username, self.USERNAME)
         self.assert_equal(admin.password, self.PASSWORD)
 
+
 class TestMainPage(WebTest):
     
     def test_main_page(self):
-        self.app.get('/')    
+        self.app.get('/')
+
+    
