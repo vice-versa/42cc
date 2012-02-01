@@ -10,11 +10,13 @@ from django.contrib.sites.models import Site
 
 register = template.Library()
 
+
 def _absolute_url(url):
     if url.startswith('http://') or url.startswith('https://'):
         return url
     domain = Site.objects.get_current().domain
     return 'http://%s%s' % (domain, url)
+
 
 @register.simple_tag
 def media(filename, flags=''):
