@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div id="container">
+  <div id="top">
+    <h1>42 Coffee Cups Test Assignment</h1>
+  </div>
+  <div id="leftSide">
+  <fieldset>
+<legend>Login details</legend>
+<form action="login.php" method="POST" class="form">
+  <label for="username">Username</label>
+    <div class="div_texbox">
+    <input name="username" type="text" class="username" id="username" value="username" />
+    </div>
+     <label for="password">Password</label>
+    <div class="div_texbox">
+    <input name="password" type="password" class="password" id="password" value="password" />
+    </div>
+    <div class="buuton_div">
+    <input name="Submit" type="button" value="Submit" class="buttons" />
+    </div>
+</form>
+    </fieldset>
+  </div>
+  <div id="rightSide">
+  <fieldset>
+<legend>Personal details</legend>
+<form action="." method="POST" class="form">
+    <label for="name">Name</label>
+    <div class="div_texbox">
+    <input name="name" type="text" class="textbox" id="name" value="John Doe" />
+    </div>
+    <label for="address">Address</label>
+    <div class="div_texbox">
+    <input name="address" type="text" class="textbox" id="address" value="12 main" />
+    </div>
+    <label for="city">City</label>
+    <div class="div_texbox">
+    <input name="city" type="text" class="textbox" id="city" value="Rochester" />
+    </div>
+    <label for="country">Country</label>
+    <div class="div_texbox">
+    <input name="country" type="text" class="textbox" id="country" value="United States" />
+    </div>
+    <div class="button_div">
+    <input name="Submit" type="button" value="Submit" class="buttons" />
+    </div>
+</form>
+    </fieldset>
+  </p></div>
+  <div class="clear"></div>
+</div>
+{% endblock content %}
