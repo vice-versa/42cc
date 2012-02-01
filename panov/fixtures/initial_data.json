@@ -341,4 +341,25 @@
       "date_joined": "2012-01-28 10:34:31"
     }
   }
+    {
+    "pk": 1,
+    "model": "panov.person",
+    "fields": {
+      "bio": "I was born in Kransodar.",
+      "last_name": "Panov",
+      "name": "Sergey",
+      "birthdate": "1981-08-11"
+    }
+  },
+  {
+    "pk": 1,
+    "model": "panov.contactinfo",
+    "fields": {
+      "owner": 1,
+      "other_contacts": "cell phone +7 904 38 033 98",
+      "jabber": "spanovaleks@gmail.com",
+      "email": "spanovaleks@gmail.com",
+      "skype": "spanovaleks@gmail.com"
+    }
+  }
 ]
