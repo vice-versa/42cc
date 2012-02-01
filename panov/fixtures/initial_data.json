@@ -340,8 +340,8 @@
       "email": "admin@admin.ru",
       "date_joined": "2012-01-28 10:34:31"
     }
-  }
-    {
+  },
+  {
     "pk": 1,
     "model": "panov.person",
     "fields": {
