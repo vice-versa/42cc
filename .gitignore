@@ -4,3 +4,4 @@
 master
 *.pyctest_panov
 test_panov
+panov/media/admin_tools
