@@ -87,7 +87,7 @@ INSTALLED_APPS = (
     'admin_tools.theming',
     'admin_tools.menu',
     'admin_tools.dashboard',
-    #'annoying',
+    
     # contrib
     'django.contrib.admin',
     'django.contrib.auth',
@@ -98,6 +98,7 @@ INSTALLED_APPS = (
     'django.contrib.sitemaps',
     'django.contrib.redirects',
     
+    'django_coverage',
     # main 
     'panov',
 
