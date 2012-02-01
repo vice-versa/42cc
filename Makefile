@@ -1,5 +1,4 @@
 all: test
 
-
 test: 
-	python manage.py test
+	django-nosetests.py

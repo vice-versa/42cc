@@ -109,6 +109,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.auth.context_processors.auth',
 )
 
+
 try:
     from settings_local import *
 except ImportError:
