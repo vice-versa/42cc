@@ -6,7 +6,8 @@ from request.models import Request
 
 def index(request, template_name='index.html', extra_context={}):
 
-    person = get_object_or_404(Person, name=u'Sergey', last_name=u'Panov')
+    person = Person.objects.latest('id')
+
     context = {
                'person': person,
                'ci': person.contactinfo,
