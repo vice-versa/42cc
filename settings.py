@@ -113,6 +113,43 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'panov.context_processors.conf.settings',
 )
 
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': True,
+    'formatters': {
+        'advanced':{
+            'format': '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+        },
+        'advanced_error':{
+            'format': 'error: %(asctime)s - %(name)s - %(levelname)s - %(message)s'
+                       
+        },
+    },
+    'handlers': {
+        'default':{
+            'level':'INFO',
+            'class':'logging.StreamHandler',
+            'formatter': 'advanced',
+            'stream': sys.stdout,
+        },  
+        'error':{
+            'level':'INFO',
+            'class':'logging.StreamHandler',
+            'formatter': 'advanced_error',
+            'stream': sys.stderr,
+            
+        },
+        
+    },
+    'loggers': {
+        '': {
+            'handlers': ['default', 'error'],
+            'level': 'INFO',
+            'propagate': False
+        },
+        
+    },
+}
 
 try:
     from settings_local import *
