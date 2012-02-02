@@ -113,6 +113,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'panov.context_processors.conf.settings',
 )
 
+REQUEST_LIST_PAGE_DEFAULT_LIMIT = 10
 
 try:
     from settings_local import *

@@ -15,20 +15,20 @@
         <th>Response</th>
         <th>Method</th>
     </tr>
-    {% for request in request_list %}
+    {% for req in request_list %}
     
     <tr>
         <td>
-           {{ request.time|date:"d m H:i:s:u" }} 
+           {{ req.time|date:"d m H:i:s.u" }} 
         </td>
         <td>
-           {{ request.path }} 
+           {{ req.path }} 
         </td>
         <td>
-           {{ request.response }} 
+           {{ req.response }} 
         </td>
         <td>
-           {{ request.method }} 
+           {{ req.method }} 
         </td>
     </tr>
     {% endfor %}
