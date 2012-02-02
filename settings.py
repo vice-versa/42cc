@@ -74,6 +74,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'request.middleware.RequestMiddleware'
     
 )
 
@@ -94,11 +95,12 @@ INSTALLED_APPS = (
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.sites',
-    'django.contrib.flatpages',
     'django.contrib.sitemaps',
     'django.contrib.redirects',
     
     'django_coverage',
+    'request',
+    
     # main 
     'panov',
 
