@@ -3,13 +3,13 @@ from django.shortcuts import render
 from panov.models import Person
 
 
-def index(request):
+def index(request, template_name='index.html'):
 
-    person = Person.objects.get(name=u'Sergey', last_name=u'Panov')
+    person = Person.objects.latest('id')
 
     context = {
                'person': person,
                'ci': person.contactinfo,
                }
 
-    return render(request, 'index.html', context)
+    return render(request, template_name, context)

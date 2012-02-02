@@ -4,26 +4,21 @@ from tddspry.django.cases import DatabaseTestCase, HttpTestCase
 from panov.models import Person, ContactInfo
 
 
-class AdminUserTest(DatabaseTestCase):
+class AdminUserTest(HttpTestCase):
     '''
     test for admin
     '''
     fixtures = ['initial_data.json']
 
     USERNAME = 'admin'
-    PASSWORD = 'sha1$c2ee8$533fa92410c831c7420cfc0f3c5b14ca2f0a7dc0'
+    PASSWORD = 'admin'
 
     def test_admin_credentials(self):
 
-        admin = User.objects.get(username=self.USERNAME,
-                                 is_superuser=True,
-                                 is_active=True)
-
-        self.assert_equal(admin.username, self.USERNAME)
-        self.assert_equal(admin.password, self.PASSWORD)
+        self.login_to_admin(self.USERNAME, self.PASSWORD)
 
 
-class TestMainPage(HttpTestCase):
+class MainPageTest(HttpTestCase):
 
     fixtures = ['initial_data.json']
 
@@ -45,7 +40,7 @@ class PersonTest(DatabaseTestCase):
     def test_unicode(self):
 
         person = self.person
-        self.assertEqual(unicode(self.person), 
+        self.assertEqual(unicode(self.person),
                          u' '.join([person.name, person.last_name]))
 
 
@@ -57,9 +52,6 @@ class ContactInfoTest(DatabaseTestCase):
                                            last_name='last_name',
                                            )
         self.ci = ContactInfo.objects.create(owner=self.person)
-
-    def tearDown(self):
-        self.person.delete()
 
     def test_unicode(self):
 
