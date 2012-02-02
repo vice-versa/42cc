@@ -9,8 +9,8 @@
   <fieldset>
     <legend>Person Info</legend>
     <div>
-        <span style='float: left'>Name:</span>
-        <div style='float: right'>    
+        <span class='left'>Name:</span>
+        <div class='right'>    
         {{ person.name }}
         </div>
         <div class='clear'>
@@ -18,25 +18,25 @@
     </div>
     
     <div>
-        <span style='float: left'>Last Name:</span>
-        <div style='float: right'>    
+        <span class='left'>Last Name:</span>
+        <div class='right'>    
         {{ person.last_name }}
         </div>
         <div class='clear'>
         </div>
     </div>
     <div>
-        <span style='float: left'>Birthdate:</span>
-        <div style='float: right'>    
+        <span class='left'>Birthdate:</span>
+        <div class='right'>    
         {{ person.birthdate }}
         </div>
         <div class='clear'>
         </div>
     </div>
     <div>
-        <span style='float: left'>Bio:</span>
+        <span class='left'>Bio:</span>
         </br>
-        <div style='float: left'>    
+        <div class='left'>    
         {{ person.bio }}
         </div>
         <div class='clear'>
@@ -48,33 +48,33 @@
   <fieldset>
     <legend>Personal contats</legend>
     <div>
-        <span style='float: left'>Email:</span>
-        <div style='float: right'>    
+        <span class='left'>Email:</span>
+        <div class='right'>    
         {{ ci.email }}
         </div>
         <div class='clear'>
         </div>
     </div>
     <div>
-        <span style='float: left'>Jabber:</span>
-        <div style='float: right'>    
+        <span class='left'>Jabber:</span>
+        <div class='right'>    
         {{ ci.jabber }}
         </div>
         <div class='clear'>
         </div>
     </div>
     <div>
-        <span style='float: left'>Skype:</span>
-        <div style='float: right'>    
+        <span class='left'>Skype:</span>
+        <div class='right'>    
         {{ ci.skype }}
         </div>
         <div class='clear'>
         </div>
     </div>
     <div>
-        <span style='float: left'>Other Contacts:</span>
+        <span class='left'>Other Contacts:</span>
         </br>
-        <div style='float: left'>    
+        <div class='left'>    
         {{ ci.email }}
         </div>
         <div class='clear'>
@@ -83,5 +83,11 @@
   </fieldset>
   </p></div>
   <div class="clear"></div>
+  <div class='line'>
+    <hr></hr>
+  </div>
+  <div class='left'>
+      <a href='{% url request-list %}'>requests</a>
+  </div>    
 </div>
 {% endblock content %}

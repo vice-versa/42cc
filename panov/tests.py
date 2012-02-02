@@ -23,12 +23,20 @@ class AdminUserTest(DatabaseTestCase):
         self.assert_equal(admin.password, self.PASSWORD)
 
 
-class TestMainPage(HttpTestCase):
+class MainPageTest(HttpTestCase):
 
     fixtures = ['initial_data.json']
 
     def test_main_page(self):
         self.go200('index')
+
+
+class RequestTest(HttpTestCase):
+
+    fixtures = ['initial_data.json']
+
+    def test_request_list_page(self):
+        self.go200('request-list')
 
 
 class PersonTest(DatabaseTestCase):

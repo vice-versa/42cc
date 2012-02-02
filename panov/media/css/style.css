@@ -144,3 +144,14 @@ label {
     text-transform:uppercase;
     font-weight:bold;
 }
+.line hr{
+    color: #717171;
+    height: 1px;
+    }
+    
+.left{
+    float: left;
+}
+.right{
+    float: right;
+}
