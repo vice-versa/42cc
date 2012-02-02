@@ -150,6 +150,7 @@ LOGGING = {
         
     },
 }
+REQUEST_LIST_PAGE_DEFAULT_LIMIT = 10
 
 try:
     from settings_local import *
