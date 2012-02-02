@@ -29,9 +29,9 @@ class ContactInfo(models.Model):
     skype = models.CharField(verbose_name=u'SkypeID', max_length=255,
                              null=True, blank=True)
 
-    other_contacts = models.TextField(verbose_name=u'Other Contacts', max_length=255,
-                           null=True, blank=True)
+    other_contacts = models.TextField(verbose_name=u'Other Contacts',
+                                      max_length=255,
+                                      null=True, blank=True)
 
     def __unicode__(self):
-        return u' '.join([self.owner.name, self.owner.last_name, u'contacts'] )
-    
+        return u' '.join([self.owner.name, self.owner.last_name, u'contacts'])
