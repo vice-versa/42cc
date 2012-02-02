@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
-from django.shortcuts import render, get_object_or_404
 from panov.models import Person
 from request.models import Request
+from django.shortcuts import render
 
 
 def index(request, template_name='index.html', extra_context={}):
 
-    person = get_object_or_404(Person, name=u'Sergey', last_name=u'Panov')
+    person = Person.objects.latest('id')
+
     context = {
                'person': person,
                'ci': person.contactinfo,
