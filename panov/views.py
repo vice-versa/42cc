@@ -12,5 +12,4 @@ def index(request):
                'ci': person.contactinfo,
                }
 
-
     return render(request, 'index.html', context)
