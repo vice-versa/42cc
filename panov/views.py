@@ -2,6 +2,7 @@
 from django.shortcuts import render, get_object_or_404
 from panov.models import Person
 from request.models import Request
+from django.conf import settings
 
 
 def index(request, template_name='index.html', extra_context={}):
@@ -18,14 +19,12 @@ def index(request, template_name='index.html', extra_context={}):
 
 def request_list(request, template_name='request_list.html', extra_context={}):
 
-    default_limit = 10
-
-    limit = request.GET.get('limit', default_limit)
+    limit = request.GET.get('limit', settings.REQUEST_LIST_PAGE_DEFAULT_LIMIT)
 
     try:
         int(limit)
     except ValueError:
-        limit = default_limit
+        pass
 
     request_list = Request.objects.all()[:limit]
 
