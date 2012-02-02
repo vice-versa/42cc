@@ -79,6 +79,21 @@ class ContactInfoTest(DatabaseTestCase):
     def test_unicode(self):
 
         person = self.ci.owner
-        right_value = u' '.join([person.name, person.last_name, u'contacts'] )
+        right_value = u' '.join([person.name, person.last_name, u'contacts'])
         self.assertEqual(unicode(self.ci), right_value)
- 
+
+
+class SettingsProcessorTest(HttpTestCase):
+
+    def test_settings(self):
+        from django.template import RequestContext
+        from django.test.client import RequestFactory
+        from django.conf import settings as django_settings
+        from panov.context_processors import settings
+
+        factory = RequestFactory()
+        request = factory.get('/')
+
+        c = RequestContext(request, {'foo': 'bar'}, [settings])
+        self.assertTrue('settings' in c)
+        self.assertEquals(c['settings'], django_settings) 

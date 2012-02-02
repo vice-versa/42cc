@@ -1,15 +1,12 @@
 # -*- coding: utf-8 -*-
 import sys
-from django import conf
-from django.conf import LazySettings
+from django.conf import settings as django_settings
 
 
-class SettingsProcessor(object):
-    def __getattr__(self, attr):
-        if attr == '__file__':
-            # autoreload support in dev server
-            return __file__
-        else:
-            return lambda request: {attr: getattr(conf, attr)}
+def settings(request):
 
-sys.modules[__name__ + '.conf'] = SettingsProcessor()
+    context = {
+               'settings': django_settings
+               }
+
+    return context

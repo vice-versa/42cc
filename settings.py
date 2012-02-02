@@ -75,20 +75,20 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'request.middleware.RequestMiddleware'
-    
+
 )
 
 ROOT_URLCONF = 'urls'
 
 
 INSTALLED_APPS = (
-    
+
     # admin tools
     'admin_tools',
     'admin_tools.theming',
     'admin_tools.menu',
     'admin_tools.dashboard',
-    
+
     # contrib
     'django.contrib.admin',
     'django.contrib.auth',
@@ -97,11 +97,11 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.sitemaps',
     'django.contrib.redirects',
-    
+
     'django_coverage',
     'request',
-    
-    # main 
+
+    # main
     'panov',
 
 )
@@ -110,36 +110,36 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.request',
     'django.core.context_processors.media',
     'django.contrib.auth.context_processors.auth',
-    'panov.context_processors.conf.settings',
+    'panov.context_processors.settings',
 )
 
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': True,
     'formatters': {
-        'advanced':{
+        'advanced': {
             'format': '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
         },
-        'advanced_error':{
+        'advanced_error': {
             'format': 'error: %(asctime)s - %(name)s - %(levelname)s - %(message)s'
-                       
+
         },
     },
     'handlers': {
-        'default':{
-            'level':'INFO',
-            'class':'logging.StreamHandler',
+        'default': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
             'formatter': 'advanced',
             'stream': sys.stdout,
-        },  
-        'error':{
-            'level':'INFO',
-            'class':'logging.StreamHandler',
+        },
+        'error': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
             'formatter': 'advanced_error',
             'stream': sys.stderr,
-            
+
         },
-        
+
     },
     'loggers': {
         '': {
@@ -147,7 +147,7 @@ LOGGING = {
             'level': 'INFO',
             'propagate': False
         },
-        
+
     },
 }
 REQUEST_LIST_PAGE_DEFAULT_LIMIT = 10
