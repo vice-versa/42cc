@@ -1,26 +1,21 @@
 # -*- coding: utf-8 -*-
-from django.contrib.auth.models import User
 from tddspry.django.cases import DatabaseTestCase, HttpTestCase
 from panov.models import Person, ContactInfo
+from request.models import Request
 
 
-class AdminUserTest(DatabaseTestCase):
+class AdminUserTest(HttpTestCase):
     '''
     test for admin
     '''
     fixtures = ['initial_data.json']
 
     USERNAME = 'admin'
-    PASSWORD = 'sha1$c2ee8$533fa92410c831c7420cfc0f3c5b14ca2f0a7dc0'
+    PASSWORD = 'admin'
 
     def test_admin_credentials(self):
 
-        admin = User.objects.get(username=self.USERNAME,
-                                 is_superuser=True,
-                                 is_active=True)
-
-        self.assert_equal(admin.username, self.USERNAME)
-        self.assert_equal(admin.password, self.PASSWORD)
+        self.login_to_admin(self.USERNAME, self.PASSWORD)
 
 
 class MainPageTest(HttpTestCase):
@@ -28,15 +23,30 @@ class MainPageTest(HttpTestCase):
     fixtures = ['initial_data.json']
 
     def test_main_page(self):
+        person = Person.objects.latest('id')
         self.go200('index')
+        self.find(str(person.name))
+        self.find(str(person.last_name))
+        self.find(str(person.birthdate.strftime("%d.%m.%Y")))
+        self.find(str(person.bio))
+        self.find(str(person.contactinfo.email))
+        self.find(str(person.contactinfo.jabber))
+        self.find(str(person.contactinfo.skype))
 
 
 class RequestTest(HttpTestCase):
 
-    fixtures = ['initial_data.json']
+    def setUp(self):
+        self.req_list = [Request.objects.create(path='/',
+                                                ip='127.0.0.1')]
 
     def test_request_list_page(self):
         self.go200('request-list')
+        for req in self.req_list:
+            self.find(str(req.time.strftime("%d %m %H:%M:%S.%f")))
+            self.find(str(req.path))
+            self.find(str(req.response))
+            self.find(str(req.method))
 
 
 class PersonTest(DatabaseTestCase):
@@ -65,9 +75,6 @@ class ContactInfoTest(DatabaseTestCase):
                                            last_name='last_name',
                                            )
         self.ci = ContactInfo.objects.create(owner=self.person)
-
-    def tearDown(self):
-        self.person.delete()
 
     def test_unicode(self):
 

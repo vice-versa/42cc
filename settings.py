@@ -113,6 +113,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'panov.context_processors.conf.settings',
 )
 
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': True,
@@ -150,6 +151,8 @@ LOGGING = {
         
     },
 }
+
+REQUEST_LIST_PAGE_DEFAULT_LIMIT = 10
 
 try:
     from settings_local import *
