@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from tddspry.django.cases import DatabaseTestCase, HttpTestCase
 from panov.models import Person, ContactInfo
+from request.models import Request
 
 
 class AdminUserTest(HttpTestCase):
@@ -35,10 +36,17 @@ class MainPageTest(HttpTestCase):
 
 class RequestTest(HttpTestCase):
 
-    fixtures = ['initial_data.json']
+    def setUp(self):
+        self.req_list = [Request.objects.create(path='/',
+                                                ip='127.0.0.1')]
 
     def test_request_list_page(self):
         self.go200('request-list')
+        for req in self.req_list:
+            self.find(str(req.time.strftime("%d %m %H:%M:%S.%f")))
+            self.find(str(req.path))
+            self.find(str(req.response))
+            self.find(str(req.method))
 
 
 class PersonTest(DatabaseTestCase):

@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-from django.shortcuts import render, get_object_or_404
 from panov.models import Person
 from request.models import Request
 from django.conf import settings
+from django.shortcuts import render
 
 
 def index(request, template_name='index.html', extra_context={}):
