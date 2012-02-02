@@ -23,7 +23,15 @@ class MainPageTest(HttpTestCase):
     fixtures = ['initial_data.json']
 
     def test_main_page(self):
+        person = Person.objects.latest('id')
         self.go200('index')
+        self.find(str(person.name))
+        self.find(str(person.last_name))
+        self.find(str(person.birthdate.strftime("%d.%m.%Y")))
+        self.find(str(person.bio))
+        self.find(str(person.contactinfo.email))
+        self.find(str(person.contactinfo.jabber))
+        self.find(str(person.contactinfo.skype))
 
 
 class PersonTest(DatabaseTestCase):
