@@ -53,7 +53,7 @@ class PersonTest(DatabaseTestCase):
     def test_unicode(self):
 
         person = self.person
-        self.assertEqual(unicode(self.person), 
+        self.assertEqual(unicode(self.person),
                          u' '.join([person.name, person.last_name]))
 
 

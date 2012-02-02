@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div id="container">
+    <div id="top">
+    <h1>42 Coffee Cups Test Assignment</h1>
+  </div>
+  <div>
+  <fieldset>
+    <legend>Request List</legend>
+    <table width="100%">
+    <tr>
+        <th>Time</th>
+        <th>Path</th>
+        <th>Response</th>
+        <th>Method</th>
+    </tr>
+    {% for request in request_list %}
+    
+    <tr>
+        <td>
+           {{ request.time|date:"d m H:i:s:u" }} 
+        </td>
+        <td>
+           {{ request.path }} 
+        </td>
+        <td>
+           {{ request.response }} 
+        </td>
+        <td>
+           {{ request.method }} 
+        </td>
+    </tr>
+    {% endfor %}
+    </table>
+    </fieldset>
+  </div>
+</div>
+
+{% endblock content%}
