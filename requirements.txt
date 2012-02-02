@@ -3,3 +3,4 @@ django-admin-tools
 coverage
 django-coverage
 tddspry
+django-request
