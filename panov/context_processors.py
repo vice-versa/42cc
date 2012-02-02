@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-import sys
 from django.conf import settings as django_settings
 
 
