@@ -98,10 +98,11 @@ class SettingsProcessorTest(HttpTestCase):
         from django.template import RequestContext
         from django.test.client import RequestFactory
         from django.conf import settings as django_settings
+        from panov.context_processors import settings as context_settings
 
         factory = RequestFactory()
         request = factory.get('/')
 
-        c = RequestContext(request, {'foo': 'bar'}, [settings])
+        c = RequestContext(request, {'foo': 'bar'}, [context_settings])
         self.assertTrue('settings' in c)
         self.assertEquals(c['settings'], django_settings)
