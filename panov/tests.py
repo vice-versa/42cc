@@ -5,6 +5,8 @@ from request.models import Request
 from django.conf import settings
 from django.core.management import call_command
 from django.db import models
+from django.core import urlresolvers
+from django.contrib.contenttypes.models import ContentType
 
 
 class AdminUserTest(HttpTestCase):
@@ -36,6 +38,17 @@ class MainPageTest(HttpTestCase):
         self.find(str(person.contactinfo.jabber))
         self.find(str(person.contactinfo.skype))
 
+    def test_admin_edit_url(self):
+        person = Person.objects.latest('id')
+        obj = person
+        self.go200('index')
+        content_type = ContentType.objects.get_for_model(obj.__class__)
+        admin_url = urlresolvers.reverse("admin:%s_%s_change" % \
+                               (content_type.app_label,
+                                content_type.model),
+                                     args=(obj.id,))
+
+        self.find(admin_url)
 
 class RequestTest(HttpTestCase):
 

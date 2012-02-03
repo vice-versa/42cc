@@ -1,10 +1,16 @@
 {% extends 'base.html' %}
-
+{% load edit_link %}
 {% block content %}
 <div id="container">
   <div id="top">
     <h1>42 Coffee Cups Test Assignment</h1>
   </div>
+      <div class="right">
+        {% admin_url person %}
+    </div>
+
+  <div class="clear">
+      </div>
   <div id="leftSide">
   <fieldset>
     <legend>Person Info</legend>
