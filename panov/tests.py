@@ -2,6 +2,7 @@
 from tddspry.django.cases import DatabaseTestCase, HttpTestCase
 from panov.models import Person, ContactInfo
 from request.models import Request
+from django.conf import settings
 
 
 class AdminUserTest(HttpTestCase):
@@ -37,12 +38,20 @@ class MainPageTest(HttpTestCase):
 class RequestTest(HttpTestCase):
 
     def setUp(self):
-        self.req_list = [Request.objects.create(path='/',
-                                                ip='127.0.0.1')]
+
+        limit = settings.REQUEST_LIST_PAGE_DEFAULT_LIMIT
+        self.limit = limit
+        Request.objects.create(path='/first', ip='127.0.0.1')
+
+        [Request.objects.create(path='/' * i,
+                                ip='127.0.0.1')
+                         for i in xrange(1, limit)]
+        Request.objects.create(path='/last', ip='127.0.0.1')
 
     def test_request_list_page(self):
         self.go200('request-list')
-        for req in self.req_list:
+        req_list = Request.objects.all().order_by('time')[:self.limit]
+        for req in req_list:
             self.find(str(req.time.strftime("%d %m %H:%M:%S.%f")))
             self.find(str(req.path))
             self.find(str(req.response))
