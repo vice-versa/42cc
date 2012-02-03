@@ -114,17 +114,17 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 )
 
 LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': True,
-    'formatters': {
-        'advanced': {
-            'format': '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+        'version': 1,
+        'disable_existing_loggers': True,
+        'formatters': {
+            'advanced': {
+                'format': '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+            },
+            'advanced_error': {
+                'format': 'error: %(asctime)s - %(name)s - %(levelname)s - %(message)s'
+    
+            },
         },
-        'advanced_error': {
-            'format': 'error: %(asctime)s - %(name)s - %(levelname)s - %(message)s'
-
-        },
-    },
     'handlers': {
         'default': {
             'level': 'INFO',
@@ -150,6 +150,29 @@ LOGGING = {
 
     },
 }
+
+
+if 'django-nosetests.py' in sys.argv[0]:
+    
+    LOGGING['handlers']['file_out'] = {
+                                   'level': 'INFO',
+                                   'class': 'logging.FileHandler',
+                                   'formatter': 'advanced',
+                                   'mode': 'w',
+                                   'filename': 'tests_out.txt'
+                                   }
+    
+    LOGGING['handlers']['file_error'] = {
+                                   'level': 'INFO',
+                                   'class': 'logging.FileHandler',
+                                   'formatter': 'advanced_error',
+                                   'mode': 'w',
+                                   'filename' : 'tests_error.txt'
+                                   }
+    
+    LOGGING['loggers']['']['handlers'].append('file_out')  
+    LOGGING['loggers']['']['handlers'].append('file_error')
+
 REQUEST_LIST_PAGE_DEFAULT_LIMIT = 10
 
 try:

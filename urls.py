@@ -23,7 +23,8 @@ urlpatterns = patterns('',
 
     # static files
     (r'^assets/admin_tools/(?P<path>.*)$', 'django.views.static.serve',
-     { 'document_root': os.path.join(settings.DIRNAME, 'panov','media','admin_tools')}),
+     {'document_root': os.path.join(settings.DIRNAME,
+                                    'panov', 'media', 'admin_tools')}),
     (r'^assets/(?P<path>.*)$', 'django.views.static.serve',
         {'document_root': settings.MEDIA_ROOT}),
 )

@@ -6,3 +6,7 @@ test_panov
 *.pyc
 *.dat
 panov/media/admin_tools
+tests.txt
+tests.txt
+tests_error.txt
+tests_out.txt

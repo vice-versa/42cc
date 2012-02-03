@@ -13,9 +13,8 @@ class Command(LabelCommand):
         """
         module = __import__(label)
         module_models = models.get_models(getattr(module, 'models'))
-        
+
         logger = getLogger('')
-        
         for model in module_models:
             logger.info(u' '.join([unicode(model),
                                    unicode(model.objects.count())]))

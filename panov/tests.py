@@ -3,6 +3,8 @@ from tddspry.django.cases import DatabaseTestCase, HttpTestCase
 from panov.models import Person, ContactInfo
 from request.models import Request
 from django.conf import settings
+from django.core.management import call_command
+from django.db import models
 
 
 class AdminUserTest(HttpTestCase):
@@ -52,7 +54,7 @@ class RequestTest(HttpTestCase):
         self.go200('request-list')
         req_list = Request.objects.all().order_by('time')[:self.limit]
         for req in req_list:
-            self.find(str(req.time.strftime("%d %m %H:%M:%S.%f")))
+            self.find(str(req.time.strftime("%d %m %H:%M:%S")))
             self.find(str(req.path))
             self.find(str(req.response))
             self.find(str(req.method))
@@ -106,3 +108,17 @@ class SettingsProcessorTest(HttpTestCase):
         c = RequestContext(request, {'foo': 'bar'}, [context_settings])
         self.assertTrue('settings' in c)
         self.assertEquals(c['settings'], django_settings)
+
+
+class ModelsCommandTest(DatabaseTestCase):
+
+    def test_command(self):
+        from panov import models as p_models
+        call_command('models', 'panov',)
+        log = ' '.join(open('tests_out.txt', 'rt').readlines())
+        module_models = models.get_models(p_models)
+        for model in module_models:
+
+            expr = u' '.join([unicode(model),
+                                   unicode(model.objects.count())]) in log
+            self.assertTrue(expr)
