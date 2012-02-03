@@ -52,7 +52,7 @@ class RequestTest(HttpTestCase):
         self.go200('request-list')
         req_list = Request.objects.all().order_by('time')[:self.limit]
         for req in req_list:
-            self.find(str(req.time.strftime("%d %m %H:%M:%S.%f")))
+            self.find(str(req.time.strftime("%d %m %H:%M:%S")))
             self.find(str(req.path))
             self.find(str(req.response))
             self.find(str(req.method))
