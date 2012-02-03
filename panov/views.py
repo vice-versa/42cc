@@ -27,7 +27,7 @@ def request_list(request, template_name='request_list.html', extra_context={}):
     except ValueError:
         pass
 
-    request_list = Request.objects.all()[:limit]
+    request_list = Request.objects.all().order_by('time')[:limit]
 
     context = {
                'request_list': request_list,
