@@ -100,6 +100,7 @@ INSTALLED_APPS = (
 
     'django_coverage',
     'request',
+    'simple_history',
 
     # main
     'panov',
