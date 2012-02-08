@@ -156,3 +156,54 @@ class ModelsCommandTest(DatabaseTestCase):
             expr = 'error: ' + u' '.join([unicode(model),
                                 unicode(model.objects.count())]) in error_log
             self.assertTrue(expr)
+
+
+class ModelSignalTest(DatabaseTestCase):
+
+    def test_create(self):
+        person = Person.objects.create(name=u'name',
+                                       last_name='last_name',
+                                       )
+        content_type = ContentType.objects.get_for_model(Person)
+
+        create_entry = ObjectsLog.objects.get(id=person.id,
+                                              content_type=content_type,
+                                              action='create',
+                                              )
+
+    def test_delete(self):
+        person = Person.objects.create(name=u'name',
+                                       last_name='last_name',
+                                       )
+
+        person.delete()
+        content_type = ContentType.objects.get_for_model(Person)
+
+        delete_entry = ObjectsLog.objects.get(id=person.id,
+                                              content_type=content_type,
+                                              action='delete',
+                                              )
+
+    def test_edit(self):
+        person = Person.objects.create(name=u'name',
+                                       last_name='last_name',
+                                       )
+
+        person.name = u'name1'
+        person.save()
+        content_type = ContentType.objects.get_for_model(Person)
+
+        edit_entry = ObjectsLog.objects.get(id=person.id,
+                                              content_type=content_type,
+                                              action='edit',
+                                              )
+
+
+
+
+
+
+
+
+
+        
