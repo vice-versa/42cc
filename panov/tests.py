@@ -52,6 +52,7 @@ class MainPageTest(HttpTestCase):
 
         self.find(admin_url)
 
+
 class RequestTest(HttpTestCase):
 
     def setUp(self):
@@ -153,5 +154,5 @@ class ModelsCommandTest(DatabaseTestCase):
             self.assertTrue(expr)
 
             expr = 'error: ' + u' '.join([unicode(model),
-                                   unicode(model.objects.count())]) in error_log
+                                unicode(model.objects.count())]) in error_log
             self.assertTrue(expr)
