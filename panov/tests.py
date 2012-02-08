@@ -40,18 +40,6 @@ class MainPageTest(HttpTestCase):
         self.find(str(person.contactinfo.jabber))
         self.find(str(person.contactinfo.skype))
 
-    def test_admin_edit_url(self):
-        person = Person.objects.latest('id')
-        obj = person
-        self.go200('index')
-        content_type = ContentType.objects.get_for_model(obj.__class__)
-        admin_url = urlresolvers.reverse("admin:%s_%s_change" % \
-                               (content_type.app_label,
-                                content_type.model),
-                                     args=(obj.id,))
-
-        self.find(admin_url)
-
 
 class RequestTest(HttpTestCase):
 
@@ -144,10 +132,15 @@ class ModelsCommandTest(DatabaseTestCase):
     def test_command(self):
         from panov import models as p_models
         call_command('models', 'panov',)
-        log = ' '.join(open('tests_out.txt', 'rt').readlines())
+        log = ' '.join(open(self.out_file, 'rt').readlines())
+        error_log = ' '.join(open(self.error_file, 'rt').readlines())
         module_models = models.get_models(p_models)
         for model in module_models:
 
             expr = u' '.join([unicode(model),
                                    unicode(model.objects.count())]) in log
+            self.assertTrue(expr)
+
+            expr = 'error: ' + u' '.join([unicode(model),
+                                   unicode(model.objects.count())]) in error_log
             self.assertTrue(expr)
