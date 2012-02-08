@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.db import models
+from simple_history.models import HistoricalRecords
 
 
 class Person(models.Model):
@@ -11,6 +12,8 @@ class Person(models.Model):
 
     bio = models.TextField(verbose_name=u'BIO', max_length=255,
                            null=True, blank=True)
+
+    history = HistoricalRecords()
 
     def __unicode__(self):
         return u' '.join([self.name, self.last_name])
@@ -35,3 +38,5 @@ class ContactInfo(models.Model):
 
     def __unicode__(self):
         return u' '.join([self.owner.name, self.owner.last_name, u'contacts'])
+
+    history = HistoricalRecords()

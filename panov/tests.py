@@ -9,6 +9,7 @@ from django.core import urlresolvers
 from django.contrib.contenttypes.models import ContentType
 import subprocess
 import shlex
+from django.contrib.admin.models import LogEntry, CHANGE, DELETION, ADDITION
 
 
 class AdminUserTest(HttpTestCase):
@@ -164,25 +165,22 @@ class ModelSignalTest(DatabaseTestCase):
         person = Person.objects.create(name=u'name',
                                        last_name='last_name',
                                        )
-        content_type = ContentType.objects.get_for_model(Person)
-
-        create_entry = ObjectsLog.objects.get(id=person.id,
-                                              content_type=content_type,
-                                              action='create',
-                                              )
+        c = Person.history.filter(id=person.id,
+                                  history_type=u'+').count()
+        self.assertEquals(c, 1)
 
     def test_delete(self):
         person = Person.objects.create(name=u'name',
                                        last_name='last_name',
                                        )
 
+        id = person.id
         person.delete()
-        content_type = ContentType.objects.get_for_model(Person)
+        del person
 
-        delete_entry = ObjectsLog.objects.get(id=person.id,
-                                              content_type=content_type,
-                                              action='delete',
-                                              )
+        c = Person.history.filter(id=id,
+                                  history_type=u'-').count()
+        self.assertEquals(c, 1)
 
     def test_edit(self):
         person = Person.objects.create(name=u'name',
@@ -191,13 +189,10 @@ class ModelSignalTest(DatabaseTestCase):
 
         person.name = u'name1'
         person.save()
-        content_type = ContentType.objects.get_for_model(Person)
 
-        edit_entry = ObjectsLog.objects.get(id=person.id,
-                                              content_type=content_type,
-                                              action='edit',
-                                              )
-
+        c = Person.history.filter(id=person.id,
+                                  history_type=u'~').count()
+        self.assertEquals(c, 1)
 
 
 

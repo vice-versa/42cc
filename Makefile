@@ -11,3 +11,5 @@ runserver:
      
 syncdb:
 	python manage.py syncdb
+shell:
+	python manage.py shell
