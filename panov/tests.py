@@ -7,6 +7,8 @@ from django.core.management import call_command
 from django.db import models
 from django.core import urlresolvers
 from django.contrib.contenttypes.models import ContentType
+import subprocess
+import shlex
 
 
 class AdminUserTest(HttpTestCase):
@@ -125,13 +127,31 @@ class SettingsProcessorTest(HttpTestCase):
 
 class ModelsCommandTest(DatabaseTestCase):
 
+    def setUp(self):
+        self.out_file = "tests_out.txt"
+        self.error_file = "tests_error.txt"
+
+    def tearDown(self):
+        command = 'rm -f %s' % self.out_file
+        args = shlex.split(command)
+        subprocess.Popen(args)
+
+        command = 'rm -f %s' % self.error_file
+        args = shlex.split(command)
+        subprocess.Popen(args)
+
     def test_command(self):
         from panov import models as p_models
         call_command('models', 'panov',)
-        log = ' '.join(open('tests_out.txt', 'rt').readlines())
+        log = ' '.join(open(self.out_file, 'rt').readlines())
+        error_log = ' '.join(open(self.error_file, 'rt').readlines())
         module_models = models.get_models(p_models)
         for model in module_models:
 
             expr = u' '.join([unicode(model),
                                    unicode(model.objects.count())]) in log
+            self.assertTrue(expr)
+
+            expr = 'error: ' + u' '.join([unicode(model),
+                                   unicode(model.objects.count())]) in error_log
             self.assertTrue(expr)
