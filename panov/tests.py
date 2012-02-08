@@ -9,7 +9,6 @@ from django.core import urlresolvers
 from django.contrib.contenttypes.models import ContentType
 import subprocess
 import shlex
-from django.contrib.admin.models import LogEntry, CHANGE, DELETION, ADDITION
 
 
 class AdminUserTest(HttpTestCase):
