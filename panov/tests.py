@@ -1,17 +1,17 @@
 # -*- coding: utf-8 -*-
-from tddspry.django.cases import DatabaseTestCase, HttpTestCase
+from django.conf import settings
+from django.contrib.contenttypes.models import ContentType
+from django.core import urlresolvers
+from django.core.management import call_command
+from django.core.urlresolvers import reverse
+from django.db import models
+from django_webtest import WebTest
 from panov.models import Person, ContactInfo
 from request.models import Request
-from django.conf import settings
-from django.core.management import call_command
-from django.db import models
-from django.core import urlresolvers
-from django.contrib.contenttypes.models import ContentType
-import subprocess
-import shlex
-from django.core.urlresolvers import reverse
-from django_webtest import WebTest
+from tddspry.django.cases import DatabaseTestCase, HttpTestCase
 import datetime
+import shlex
+import subprocess
 
 
 class AdminUserTest(HttpTestCase):

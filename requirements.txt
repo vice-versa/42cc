@@ -6,3 +6,4 @@ tddspry
 django-request
 -e hg+https://bitbucket.org/vice_versa/django-simple-history#egg=simple_history
 django-webtest
+webtest
