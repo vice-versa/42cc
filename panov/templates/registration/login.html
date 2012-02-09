@@ -1,15 +1,22 @@
-  <fieldset>
+{% extends "base.html" %}
+{% block content %}
+<div id="container">
+  <div id="top">
+    <h1>42 Coffee Cups Test Assignment</h1>
+  </div>
+<div>
+<fieldset>
 <legend>Login details</legend>
-<form action="login.php" method="POST" class="form">
-  <label for="username">Username</label>
-    <div class="div_texbox">
-    <input name="username" type="text" class="username" id="username" value="username" />
-    </div>
-     <label for="password">Password</label>
-    <div class="div_texbox">
-    <input name="password" type="password" class="password" id="password" value="password" />
-    </div>
-    <div class="buuton_div">
-    <input name="Submit" type="button" value="Submit" class="buttons" />
-    </div>
+<form method="post" action="{% url login %}">
+{% csrf_token %}
+<table>
+    {{ form.as_table }}
+</table>
+
+<input type="submit" value="login" />
+<input type="hidden" name="next" value="{{ next }}" />
 </form>
+</fieldset>
+</div>
+</div>
+{% endblock %}
