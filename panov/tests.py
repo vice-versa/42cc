@@ -12,6 +12,9 @@ from tddspry.django.cases import DatabaseTestCase, HttpTestCase
 import datetime
 import shlex
 import subprocess
+from django.contrib.auth.models import User
+from django.contrib.auth import logout
+from django.contrib.sessions.models import Session
 
 
 class AdminUserTest(HttpTestCase):
@@ -249,5 +252,15 @@ class EditPersonFormTest(WebTest):
         for key, value in ci_data.iteritems():
             self.assertEquals(getattr(ci, key), value)
 
-class EditTest(WebTest):
-    pass
+
+class LoginFormTest(WebTest):
+
+    def test_login_form(self):
+
+        response = self.app.get(reverse('login'))
+        username = 'admin'
+        password = 'admin'
+        form = response.form
+        form['username'] = username
+        form['password'] = password
+        response = form.submit()
