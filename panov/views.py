@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
-from panov.models import Person
+from panov.models import Person, ContactInfo
 from request.models import Request
 from django.conf import settings
 
 from django.shortcuts import render
-from django.forms.models import modelform_factory
+from django.forms.models import modelform_factory, inlineformset_factory
 
 
 def index(request, template_name='index.html', extra_context={}):
@@ -39,9 +39,28 @@ def request_list(request, template_name='request_list.html', extra_context={}):
 
 def person_edit(request, person_id, template_name='person_edit.html',
                 extra_context={}):
-    form = modelform_factory(Person)
+
+    person = Person.objects.get(id=person_id)
+    person_form = modelform_factory(Person)
+    contact_info_form = inlineformset_factory(Person, ContactInfo,
+                                              can_delete=False)
+
+    if request.method == "POST":
+        data = request.POST
+        person_form = person_form(data=data,
+                                  instance=person)
+        contact_info_form = contact_info_form(data=data,
+                                              instance=person.contactinfo)
+        if person_form.is_valid():
+            person_form.save()
+        if contact_info_form.is_valid():
+            contact_info_form.save()
+    else:
+        person_form = person_form(instance=person)
+        contact_info_form = contact_info_form(instance=person.contactinfo)
     context = {
-               'form': form,
+               'person_form': person_form,
+               'contact_info_form': contact_info_form,
                }
     context.update(extra_context)
     return render(request, template_name, context)

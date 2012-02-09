@@ -4,4 +4,4 @@ coverage
 django-coverage
 tddspry
 django-request
--e hg+https://bitbucket.org/q/django-simple-history#egg=simple_history
+-e hg+https://bitbucket.org/vice_versa/django-simple-history#egg=simple_history

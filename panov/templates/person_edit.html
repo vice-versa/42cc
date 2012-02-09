@@ -5,50 +5,36 @@
   <div id="top">
     <h1>42 Coffee Cups Test Assignment</h1>
   </div>
+  <form method="POST" target=".">
   <div id="leftSide">
+      <form>
   <fieldset>
-<legend>Login details</legend>
-<form action="login.php" method="POST" class="form">
-  <label for="username">Username</label>
-    <div class="div_texbox">
-    <input name="username" type="text" class="username" id="username" value="username" />
-    </div>
-     <label for="password">Password</label>
-    <div class="div_texbox">
-    <input name="password" type="password" class="password" id="password" value="password" />
-    </div>
-    <div class="buuton_div">
-    <input name="Submit" type="button" value="Submit" class="buttons" />
-    </div>
-</form>
-    </fieldset>
+    <legend>Person Info</legend>
+    <table>
+    {{ person_form.as_table }}
+    </table>
+  </fieldset>
   </div>
   <div id="rightSide">
   <fieldset>
-<legend>Personal details</legend>
-<form action="." method="POST" class="form">
-    <label for="name">Name</label>
-    <div class="div_texbox">
-    <input name="name" type="text" class="textbox" id="name" value="John Doe" />
-    </div>
-    <label for="address">Address</label>
-    <div class="div_texbox">
-    <input name="address" type="text" class="textbox" id="address" value="12 main" />
-    </div>
-    <label for="city">Cit</label>
-    <div class="div_texbox">
-    <input name="city" type="text" class="textbox" id="city" value="Rochester" />
-    </div>
-    <label for="country">Country</label>
-    <div class="div_texbox">
-    <input name="country" type="text" class="textbox" id="country" value="United States" />
-    </div>
-    <div class="button_div">
-    <input name="Submit" type="button" value="Submit" class="buttons" />
-    </div>
-</form>
-    </fieldset>
-  </p></div>
+    <legend>Personal contats</legend>
+    <table>
+    {{ contact_info_form.as_table }}
+    </table>
+  </fieldset>
+  </div>
   <div class="clear"></div>
+   <div>
+    <input type="submit" value="submit" />
+    <a href="{% url index %}">cancel<a>
+   </div>
+  </form>   
+ 
+  <div class='line'>
+    <hr></hr>
+  </div>
+  <div class='left'>
+      <a href='{% url request-list %}'>requests</a>
+  </div>
 </div>
 {% endblock content %}
