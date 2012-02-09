@@ -46,6 +46,7 @@ class MainPageTest(HttpTestCase):
     def test_admin_edit_url(self):
         person = Person.objects.latest('id')
         obj = person
+        self.login('admin', 'admin')
         self.go200('index')
         content_type = ContentType.objects.get_for_model(obj.__class__)
         admin_url = urlresolvers.reverse("admin:%s_%s_change" % \
@@ -57,6 +58,7 @@ class MainPageTest(HttpTestCase):
 
     def test_person_edit_url(self):
         person = Person.objects.latest('id')
+        self.login('admin', 'admin')
         self.go200('index')
         person_edit_url = urlresolvers.reverse("person-edit",
                                                kwargs={
@@ -213,7 +215,7 @@ class EditPersonFormTest(WebTest):
 
         person = Person.objects.latest('id')
         response = self.app.get(reverse('person-edit',
-                           kwargs={'person_id': person.id}))
+                           kwargs={'person_id': person.id}), user='admin')
 
         form = response.form
 
@@ -246,3 +248,6 @@ class EditPersonFormTest(WebTest):
 
         for key, value in ci_data.iteritems():
             self.assertEquals(getattr(ci, key), value)
+
+class EditTest(WebTest):
+    pass
