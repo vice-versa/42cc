@@ -5,11 +5,15 @@
   <div id="top">
     <h1>42 Coffee Cups Test Assignment</h1>
   </div>
-      <div class="right">
-        <a href="{% url person-edit person.id %}">edit</a>  
-        {% admin_url person %}
+     <div class="right">
+        {% if request.user.is_authenticated %}
+            <a href="{% url person-edit person.id %}">edit</a>  
+            {% admin_url person %}
+            <a href="{% url logout %}">logout</a>
+        {% else %}
+            <a href="{% url login %}">login</a>
+        {% endif %}    
     </div>
-
   <div class="clear">
       </div>
   <div id="leftSide">

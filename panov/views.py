@@ -5,12 +5,16 @@ from django.conf import settings
 
 from django.shortcuts import render
 from django.forms.models import modelform_factory, inlineformset_factory
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.views import login as generic_login
+from django.contrib.auth import logout as auth_logout
+from django.core.urlresolvers import reverse
+from django.http import HttpResponseRedirect
 
 
 def index(request, template_name='index.html', extra_context={}):
 
     person = Person.objects.latest('id')
-
     context = {
                'person': person,
                'ci': person.contactinfo,
@@ -37,6 +41,7 @@ def request_list(request, template_name='request_list.html', extra_context={}):
     return render(request, template_name, context)
 
 
+@login_required
 def person_edit(request, person_id, template_name='person_edit.html',
                 extra_context={}):
 
@@ -65,3 +70,9 @@ def person_edit(request, person_id, template_name='person_edit.html',
     context.update(extra_context)
     return render(request, template_name, context)
 
+login = generic_login
+
+
+def logout(request):
+    auth_logout(request)
+    return HttpResponseRedirect(reverse('index'))

@@ -9,4 +9,6 @@ urlpatterns = patterns('panov.views',
     url(r'^person/edit/(?P<person_id>\d+)/$',
         'person_edit',
         name="person-edit"),
-                    )
+    url(r'accounts/login/$', 'login', name='login'),
+    url(r'accounts/logout/$', 'logout', name='logout')
+    )

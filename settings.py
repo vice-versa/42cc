@@ -175,6 +175,7 @@ if 'django-nosetests.py' in sys.argv[0]:
     LOGGING['loggers']['']['handlers'].append('file_error')
 
 REQUEST_LIST_PAGE_DEFAULT_LIMIT = 10
+LOGIN_REDIRECT_URL = '/'
 
 try:
     from settings_local import *
