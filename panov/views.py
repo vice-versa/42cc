@@ -4,6 +4,7 @@ from request.models import Request
 from django.conf import settings
 
 from django.shortcuts import render
+from django.forms.models import modelform_factory
 
 
 def index(request, template_name='index.html', extra_context={}):
@@ -34,3 +35,14 @@ def request_list(request, template_name='request_list.html', extra_context={}):
                }
     context.update(extra_context)
     return render(request, template_name, context)
+
+
+def person_edit(request, person_id, template_name='person_edit.html',
+                extra_context={}):
+    form = modelform_factory(Person)
+    context = {
+               'form': form,
+               }
+    context.update(extra_context)
+    return render(request, template_name, context)
+

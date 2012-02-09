@@ -52,6 +52,16 @@ class MainPageTest(HttpTestCase):
 
         self.find(admin_url)
 
+    def test_person_edit_url(self):
+        person = Person.objects.latest('id')
+        self.go200('index')
+        person_edit_url = urlresolvers.reverse("person-edit",
+                                               kwargs={
+                                                       "person_id": person.id}
+                                               )
+
+        self.find(person_edit_url)
+
 
 class RequestTest(HttpTestCase):
 
