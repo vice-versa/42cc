@@ -9,6 +9,9 @@ from django.core import urlresolvers
 from django.contrib.contenttypes.models import ContentType
 import subprocess
 import shlex
+from django.core.urlresolvers import reverse
+from django_webtest import WebTest
+import datetime
 
 
 class AdminUserTest(HttpTestCase):
@@ -204,10 +207,42 @@ class ModelSignalTest(DatabaseTestCase):
         self.assertEquals(c, 1)
 
 
+class EditPersonFormTest(WebTest):
 
+    def test_form(self):
 
+        person = Person.objects.latest('id')
+        response = self.app.get(reverse('person-edit',
+                           kwargs={'person_id': person.id}))
 
+        form = response.form
 
+        person_data = {'name': u'test name',
+                       'last_name': u'test name last_name',
+                       'birthdate': u"1981-08-12",
+                       'bio': u"test bio",
+                       }
 
+        for key, value in person_data.iteritems():
+            form[key] = value
 
-        
+        ci_data = {"email": "email@test.com",
+                   "jabber": "email@test.com",
+                   "skype": "skype@test.com",
+                   "other_contacts": "other info"}
+
+        for key, value in ci_data.iteritems():
+            key = 'contactinfo-0-' + key
+            form[key] = value
+
+        form.submit()
+        person = Person.objects.latest('id')
+
+        for key in ['name', 'last_name', 'bio']:
+            self.assertEquals(getattr(person, key), person_data[key])
+        self.assertEquals(person.birthdate, datetime.date(1981, 8, 12))
+
+        ci = person.contactinfo
+
+        for key, value in ci_data.iteritems():
+            self.assertEquals(getattr(ci, key), value)
