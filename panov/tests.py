@@ -258,9 +258,14 @@ class LoginFormTest(WebTest):
     def test_login_form(self):
 
         response = self.app.get(reverse('login'))
+        # check we are not logged
+        self.assertEqual(response.context['user'].username, '')
+
         username = 'admin'
         password = 'admin'
         form = response.form
         form['username'] = username
         form['password'] = password
-        response = form.submit()
+        response = form.submit().follow()
+        # check we are logged
+        self.assertEqual(response.context['user'].username, 'admin')
