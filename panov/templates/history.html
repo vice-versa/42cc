@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div id="container">
+    <div id="top">
+    <h1>42 Coffee Cups Test Assignment</h1>
+  </div>
+  {% for model in module_models %}
+  {% for name, records in model.items %}
+  <div>
+     
+  <fieldset>
+    <legend>History {{ name }}</legend>
+    <table width="100%">
+    <tr>
+        <th>Date</th>
+        <th>Object</th>
+        <th>Action</th>
+        <th>Author</th>
+    </tr>
+    {% for record in records %}
+    
+    <tr>
+        <td>
+           {{ record.history_date|date:"d m Y H:i:s" }} 
+        </td>
+         <td>
+           {{ record.history_object }} 
+        </td>
+        <td>
+           {{ record.get_history_type_display }} 
+        </td>
+        <td>
+           {{ record.changed_by }} 
+        </td>
+    </tr>
+    {% endfor %}
+    </table>
+    </fieldset>
+    
+  </div>
+  {% endfor %}
+  {% endfor %}
+</div>
+
+{% endblock content%}

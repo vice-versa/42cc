@@ -1,5 +1,6 @@
 from panov.models import ContactInfo, Person
 from django.contrib import admin
+from simple_history.admin import SimpleHistoryAdmin
 
 
 class ContactInfoAdmin(admin.TabularInline):
@@ -7,7 +8,7 @@ class ContactInfoAdmin(admin.TabularInline):
     extra = 0
 
 
-class PersonAdmin(admin.ModelAdmin):
+class PersonAdmin(SimpleHistoryAdmin):
 
     inlines = [ContactInfoAdmin, ]
 

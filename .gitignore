@@ -13,3 +13,5 @@ tests_out.txt
 django_cache
 panov/media/images
 panov/media/cache
+django_cache
+
