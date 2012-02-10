@@ -10,3 +10,6 @@ tests.txt
 tests.txt
 tests_error.txt
 tests_out.txt
+panov/media/images
+panov/media/cache
+django_cache
