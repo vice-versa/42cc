@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 {% load edit_link %}
+{% load thumbnail %}
+
 {% block content %}
 <div id="container">
   <div id="top">
@@ -45,10 +47,16 @@
         </div>
     </div>
     <div>
-        <span class='left'>Bio:</span>
+        <span class='left'>Photo:</span>
         </br>
-        <div class='left'>    
-        {{ person.bio }}
+        <div class='left'>
+            {% if person.photo %}
+               {% thumbnail person.photo "250x250" as im %}
+                    <img src="{{ im.url }}"
+                        style="margin:{{ im|margin:"250x250" }}"
+                        alt="" />
+                {% endthumbnail %}
+            {% endif %}
         </div>
         <div class='clear'>
         </div>
@@ -86,7 +94,16 @@
         <span class='left'>Other Contacts:</span>
         </br>
         <div class='left'>    
-        {{ ci.email }}
+        {{ ci.other_contacts }}
+        </div>
+        <div class='clear'>
+        </div>
+    </div>
+    <div>
+        <span class='left'>Bio:</span>
+        </br>
+        <div class='left'>    
+        {{ person.bio }}
         </div>
         <div class='clear'>
         </div>

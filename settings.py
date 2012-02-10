@@ -101,6 +101,7 @@ INSTALLED_APPS = (
     'django_coverage',
     'request',
     'simple_history',
+    'sorl.thumbnail',
 
     # main
     'panov',
@@ -176,6 +177,14 @@ if 'django-nosetests.py' in sys.argv[0]:
 
 REQUEST_LIST_PAGE_DEFAULT_LIMIT = 10
 LOGIN_REDIRECT_URL = '/'
+THUMBNAIL_DEBUG = True
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': 'django_cache',
+    }
+}
 
 try:
     from settings_local import *

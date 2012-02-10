@@ -10,6 +10,10 @@ class Person(models.Model):
     birthdate = models.DateField(verbose_name=u'Date of birth',
                                  null=True, blank=True)
 
+    photo = models.ImageField(verbose_name=u'Photo',
+                              upload_to='images/',
+                              null=True, blank=True)
+
     bio = models.TextField(verbose_name=u'BIO', max_length=255,
                            null=True, blank=True)
 
