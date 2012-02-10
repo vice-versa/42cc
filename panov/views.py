@@ -1,22 +1,15 @@
 # -*- coding: utf-8 -*-
-<<<<<<< HEAD
 from panov.models import Person, ContactInfo
-=======
->>>>>>> t10_signal_processor
 from request.models import Request
 from django.conf import settings
 
 from django.shortcuts import render
-<<<<<<< HEAD
 from django.forms.models import modelform_factory, inlineformset_factory
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import login as generic_login
 from django.contrib.auth import logout as auth_logout
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
-=======
-from panov.models import ContactInfo, Person
->>>>>>> t10_signal_processor
 
 
 def index(request, template_name='index.html', extra_context={}):
