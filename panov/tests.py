@@ -66,6 +66,12 @@ class MainPageTest(HttpTestCase):
         self.find(person_edit_url)
 
 
+    def test_history_page_link(self): 
+        self.go200('index')
+        url = urlresolvers.reverse("history")
+        self.find(url)
+
+
 class RequestTest(HttpTestCase):
 
     def setUp(self):
@@ -246,3 +252,18 @@ class EditPersonFormTest(WebTest):
 
         for key, value in ci_data.iteritems():
             self.assertEquals(getattr(ci, key), value)
+
+
+class HistoryPageTest(HttpTestCase):
+
+    def test_page(self):
+        self.go200("history")
+        module_models = [Person, ContactInfo]
+
+        for model in module_models:
+            history = model.history.all()
+            for record in history:
+                self.find(record.history_date.strftime("%d %m %Y %H:%M:%S"))
+                self.find(unicode(record.history_object))
+                self.find(record.get_history_type_display())
+                self.find(unicode(record.changed_by))

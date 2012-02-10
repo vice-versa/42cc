@@ -10,5 +10,6 @@ urlpatterns = patterns('panov.views',
         'person_edit',
         name="person-edit"),
     url(r'accounts/login/$', 'login', name='login'),
-    url(r'accounts/logout/$', 'logout', name='logout')
-    )
+    url(r'accounts/logout/$', 'logout', name='logout'),
+    url(r'^history/$', 'history', name="history"),
+                    )
