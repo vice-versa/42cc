@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-from panov.models import Person
 from request.models import Request
 from django.conf import settings
 
 from django.shortcuts import render
+from panov.models import ContactInfo, Person
 
 
 def index(request, template_name='index.html', extra_context={}):
@@ -34,3 +34,21 @@ def request_list(request, template_name='request_list.html', extra_context={}):
                }
     context.update(extra_context)
     return render(request, template_name, context)
+
+
+def history(request, template_name='history.html', extra_context={}):
+
+    module_models = [Person, ContactInfo]
+
+    context = {
+               'module_models': []
+               }
+
+    for model in module_models:
+        context['module_models'].append(
+                                        {str(model):list(model.history.all())})
+
+    context.update(extra_context)
+    return render(request, template_name, context)
+
+
