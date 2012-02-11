@@ -3,10 +3,9 @@ from panov.models import Person
 from django.forms.models import ModelForm
 from django.forms.fields import ImageField
 from django.forms.widgets import ClearableFileInput, CheckboxInput
-from django.utils.html import escape, conditional_escape
-from django.utils.encoding import force_unicode
+from django.utils.html import conditional_escape
 from django.utils.safestring import mark_safe
-from django.template.loader import render_to_string, get_template_from_string
+from django.template.loader import render_to_string
 
 
 class PhotoWidget(ClearableFileInput):
@@ -26,25 +25,25 @@ class PhotoWidget(ClearableFileInput):
 
         if value and hasattr(value, "url"):
             template = self.template_with_initial
-            thumbnail = render_to_string("photo_thumbnail.html", {'photo':value})
             substitutions['initial'] = render_to_string("photo_thumbnail.html", {'photo':value})
-            
             if not self.is_required:
                 checkbox_name = self.clear_checkbox_name(name)
                 checkbox_id = self.clear_checkbox_id(checkbox_name)
                 substitutions['clear_checkbox_name'] = conditional_escape(checkbox_name)
                 substitutions['clear_checkbox_id'] = conditional_escape(checkbox_id)
-                substitutions['clear'] = CheckboxInput().render(checkbox_name, False, attrs={'id': checkbox_id})
+                substitutions['clear'] = CheckboxInput().render(checkbox_name,
+                                                                False,
+                                                                attrs={'id': checkbox_id})
                 substitutions['clear_template'] = self.template_with_clear % substitutions
 
         return mark_safe(template % substitutions)
 
 
-
 class PhotoField(ImageField):
     widget = PhotoWidget
 
+
 class PersonForm(ModelForm):
     model = Person
-    
+
     photo = PhotoField(label=u"Photo")
