@@ -10,6 +10,7 @@ from django.contrib.auth.views import login as generic_login
 from django.contrib.auth import logout as auth_logout
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
+from django.forms.formsets import all_valid
 
 
 def index(request, template_name='index.html', extra_context={}):
@@ -52,7 +53,7 @@ def person_edit(request, person_id, template_name='person_edit.html',
 
     if request.method == "POST":
         data = request.POST
-        person_form = person_form(data=data,
+        person_form = person_form(data=data, files=request.FILES,
                                   instance=person)
         contact_info_form = contact_info_form(data=data,
                                               instance=person.contactinfo)
@@ -60,6 +61,8 @@ def person_edit(request, person_id, template_name='person_edit.html',
             person_form.save()
         if contact_info_form.is_valid():
             contact_info_form.save()
+        if all_valid([contact_info_form, person_form]):
+            return HttpResponseRedirect(reverse('index'))
     else:
         person_form = person_form(instance=person)
         contact_info_form = contact_info_form(instance=person.contactinfo)

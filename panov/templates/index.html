@@ -51,7 +51,7 @@
         </br>
         <div class='left'>
             {% if person.photo %}
-               {% thumbnail person.photo "250x250" as im %}
+               {% thumbnail person.photo "250x250" upscale=False as im %}
                     <img src="{{ im.url }}"
                         style="margin:{{ im|margin:"250x250" }}"
                         alt="" />
