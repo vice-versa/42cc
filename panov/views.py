@@ -11,6 +11,7 @@ from django.contrib.auth import logout as auth_logout
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.forms.formsets import all_valid
+from panov.forms import PersonForm
 
 
 def index(request, template_name='index.html', extra_context={}):
@@ -47,7 +48,7 @@ def person_edit(request, person_id, template_name='person_edit.html',
                 extra_context={}):
 
     person = Person.objects.get(id=person_id)
-    person_form = modelform_factory(Person)
+    person_form = modelform_factory(Person, form=PersonForm)
     contact_info_form = inlineformset_factory(Person, ContactInfo,
                                               can_delete=False)
 
@@ -95,4 +96,3 @@ def history(request, template_name='history.html', extra_context={}):
 
     context.update(extra_context)
     return render(request, template_name, context)
-

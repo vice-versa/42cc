@@ -1,0 +1,6 @@
+{% load thumbnail %}
+{% thumbnail photo "250x250" upscale=False as im %}
+    <img src="{{ im.url }}"
+        style="margin:{{ im|margin:"250x250" }}"
+     alt="" />
+{% endthumbnail %}
