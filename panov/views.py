@@ -101,13 +101,15 @@ def history(request, template_name='history.html', extra_context={}):
 
 
 def upload(request, person_id):
+    context = {'errors': ''}
     tmp_file_form = modelform_factory(TmpFile)
     tmp_file_form = tmp_file_form(data=request.POST, files=request.FILES)
-    raise Exception(123)
     if tmp_file_form.is_valid():
         tmp_file = tmp_file_form.save()
         msg = render_to_string("photo_thumbnail.html",
                                {'photo': tmp_file.photo}
                                )
-        context = {"msg": msg}
-        return HttpResponse(simplejson.dumps(context))
+        context["msg"] = msg
+    else:
+        context['errors'] = tmp_file_form.errors['photo']
+    return HttpResponse(simplejson.dumps(context))

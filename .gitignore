@@ -14,3 +14,4 @@ panov/media/cache
 django_cache
 
 panov/media/images/uploads
+panov.db

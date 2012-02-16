@@ -2,18 +2,31 @@ $(document).ready(function(){
     
     $('#id_photo').change(function(){
     var options = {
-        url:'upload/',
+        url:"upload/",
         success: showResponse,
     };
     
-    $('#photo').ajaxSubmit(options)
-    
+    $('#person_form').ajaxSubmit(options)
     })
     
-})
+});
+
 function showResponse(responseText, statusText, xhr, $form)  { 
-    data = $.parseJSON(responseText)
-    $($form).find('.preview').find('img').replaceWith(data.msg)
+    data = $.parseJSON(responseText);
+    $($form).find('.preview').closest('td').find('.errorlist').remove()
+    if (data.errors !=''){
+        text = '<ul class="errorlist">'
+        for (var i=0; i < data.errors.length; i++) {
+          text += "<li>" + data.errors[i] + "</li>"
+          
+        };
+        text +='</ul>'
+        $($form).find('.preview').closest('td').prepend(text)
+        $($form).find('.preview').hide()    
+    }
+    else{
+        $($form).find('.preview').replaceWith(data.msg);
+    }
     }
     
 $(document).ajaxSend(function(event, xhr, settings) {
