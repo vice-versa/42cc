@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from panov.models import Person
+from panov.models import Person, ContactInfo
 from django.forms.models import ModelForm
 from django.forms.fields import ImageField
 from django.forms.widgets import ClearableFileInput, CheckboxInput
@@ -50,3 +50,18 @@ class PersonForm(ModelForm):
     model = Person
 
     photo = PhotoField(label=u"Photo", required=False)
+
+
+class ReversePersonForm(PersonForm):
+
+    def __init__(self, *args, **kwargs):
+        super(ReversePersonForm, self).__init__(*args, **kwargs)
+        self.fields.keyOrder = ['bio', 'photo', 'birthdate',
+                                'last_name', 'name']
+
+
+class ReverseContactInfoForm(ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super(ReverseContactInfoForm, self).__init__(*args, **kwargs)
+        self.fields.keyOrder = ['other_contacts', 'skype', 'jabber', 'email']

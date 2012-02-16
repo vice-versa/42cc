@@ -11,7 +11,7 @@ from django.contrib.auth import logout as auth_logout
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponse
 from django.forms.formsets import all_valid
-from panov.forms import PersonForm
+from panov.forms import PersonForm, ReverseContactInfoForm, ReversePersonForm
 from django.template.loader import render_to_string
 from django.utils import simplejson
 
@@ -50,8 +50,9 @@ def person_edit(request, person_id, template_name='person_edit.html',
                 extra_context={}):
 
     person = Person.objects.get(id=person_id)
-    person_form = modelform_factory(Person, form=PersonForm)
+    person_form = modelform_factory(Person, form=ReversePersonForm)
     contact_info_form = inlineformset_factory(Person, ContactInfo,
+                                              form=ReverseContactInfoForm,
                                               can_delete=False)
 
     if request.method == "POST":
