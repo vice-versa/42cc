@@ -1,3 +1,5 @@
+42 coffee cups test
+
 1. base Create basic django project that would present your name, surname, bio, contacts on the main page. Data should be stored in the DB, that's
 manage.py syncdb
 manage.py runserver
