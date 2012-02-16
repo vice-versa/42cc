@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from panov.models import Person, ContactInfo
+from panov.models import Person, ContactInfo, TmpFile
 from request.models import Request
 from django.conf import settings
 
@@ -9,9 +9,11 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import login as generic_login
 from django.contrib.auth import logout as auth_logout
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.forms.formsets import all_valid
 from panov.forms import PersonForm
+from django.template.loader import render_to_string
+from django.utils import simplejson
 
 
 def index(request, template_name='index.html', extra_context={}):
@@ -96,3 +98,16 @@ def history(request, template_name='history.html', extra_context={}):
 
     context.update(extra_context)
     return render(request, template_name, context)
+
+
+def upload(request, person_id):
+    tmp_file_form = modelform_factory(TmpFile)
+    tmp_file_form = tmp_file_form(data=request.POST, files=request.FILES)
+    raise Exception(123)
+    if tmp_file_form.is_valid():
+        tmp_file = tmp_file_form.save()
+        msg = render_to_string("photo_thumbnail.html",
+                               {'photo': tmp_file.photo}
+                               )
+        context = {"msg": msg}
+        return HttpResponse(simplejson.dumps(context))

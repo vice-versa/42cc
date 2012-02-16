@@ -10,7 +10,7 @@ from django.template.loader import render_to_string
 
 class PhotoWidget(ClearableFileInput):
 
-    template_with_initial = u'%(input_text)s: %(input)s <br/ >%(clear_template)s <br />%(initial)s <br />'
+    template_with_initial = u'%(input_text)s: %(input)s <br/ >%(clear_template)s <br /><div class="preview">%(initial)s</div> <br />'
 
     template_with_clear = u'%(clear)s <label for="%(clear_checkbox_id)s">%(clear_checkbox_label)s</label>'
 

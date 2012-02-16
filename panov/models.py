@@ -11,7 +11,7 @@ class Person(models.Model):
                                  null=True, blank=True)
 
     photo = models.ImageField(verbose_name=u'Photo',
-                              upload_to='images/',
+                              upload_to='images/uploads/',
                               null=True, blank=True)
 
     bio = models.TextField(verbose_name=u'BIO', max_length=255,
@@ -44,3 +44,15 @@ class ContactInfo(models.Model):
         return u' '.join([self.owner.name, self.owner.last_name, u'contacts'])
 
     history = HistoricalRecords()
+
+
+class TmpFile(models.Model):
+
+    photo = models.ImageField(verbose_name=u'TmpPhoto',
+                              upload_to='images/uploads/tmp/')
+
+    history = HistoricalRecords()
+
+    def __unicode__(self):
+        return unicode(self.photo)
+
