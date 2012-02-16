@@ -10,9 +10,9 @@ from django.template.loader import render_to_string
 
 class PhotoWidget(ClearableFileInput):
 
-    template_with_initial = u'%(input_text)s: %(input)s <br/ >%(initial)s<br />%(clear_template)s <br />'
+    template_with_initial = u'%(input)s <br/ >%(initial)s<br />%(clear_template)s <br />'
 
-    template_with_clear = u'%(clear)s <label for="%(clear_checkbox_id)s">%(clear_checkbox_label)s</label>'
+    template_with_clear = u'<div class="left">%(clear)s <label for="%(clear_checkbox_id)s">%(clear_checkbox_label)s</label></div>'
 
     def render(self, name, value, attrs=None):
         substitutions = {
@@ -21,7 +21,7 @@ class PhotoWidget(ClearableFileInput):
             'clear_checkbox_label': self.clear_checkbox_label,
         }
 
-        template = u'%(input_text)s: %(input)s <br/ ><div class="preview"></div>'
+        template = u'%(input)s <br/ ><div class="preview"></div>'
         substitutions['input'] = super(ClearableFileInput, self).render(name,
                                                                         value,
                                                                         attrs)
