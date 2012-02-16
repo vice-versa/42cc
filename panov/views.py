@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from panov.models import Person, ContactInfo
+from panov.models import Person, ContactInfo, TmpFile
 from request.models import Request
 from django.conf import settings
 
@@ -9,7 +9,11 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import login as generic_login
 from django.contrib.auth import logout as auth_logout
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
+from django.forms.formsets import all_valid
+from panov.forms import PersonForm
+from django.template.loader import render_to_string
+from django.utils import simplejson
 
 
 def index(request, template_name='index.html', extra_context={}):
@@ -46,13 +50,13 @@ def person_edit(request, person_id, template_name='person_edit.html',
                 extra_context={}):
 
     person = Person.objects.get(id=person_id)
-    person_form = modelform_factory(Person)
+    person_form = modelform_factory(Person, form=PersonForm)
     contact_info_form = inlineformset_factory(Person, ContactInfo,
                                               can_delete=False)
 
     if request.method == "POST":
         data = request.POST
-        person_form = person_form(data=data,
+        person_form = person_form(data=data, files=request.FILES,
                                   instance=person)
         contact_info_form = contact_info_form(data=data,
                                               instance=person.contactinfo)
@@ -60,6 +64,8 @@ def person_edit(request, person_id, template_name='person_edit.html',
             person_form.save()
         if contact_info_form.is_valid():
             contact_info_form.save()
+        if all_valid([contact_info_form, person_form]):
+            return HttpResponseRedirect(reverse('index'))
     else:
         person_form = person_form(instance=person)
         contact_info_form = contact_info_form(instance=person.contactinfo)
@@ -93,3 +99,17 @@ def history(request, template_name='history.html', extra_context={}):
     context.update(extra_context)
     return render(request, template_name, context)
 
+
+def upload(request, person_id):
+    context = {'errors': ''}
+    tmp_file_form = modelform_factory(TmpFile)
+    tmp_file_form = tmp_file_form(data=request.POST, files=request.FILES)
+    if tmp_file_form.is_valid():
+        tmp_file = tmp_file_form.save()
+        msg = render_to_string("photo_thumbnail.html",
+                               {'photo': tmp_file.photo}
+                               )
+        context["msg"] = msg
+    else:
+        context['errors'] = tmp_file_form.errors['photo']
+    return HttpResponse(simplejson.dumps(context))

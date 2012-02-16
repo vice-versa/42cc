@@ -12,4 +12,7 @@ urlpatterns = patterns('panov.views',
     url(r'accounts/login/$', 'login', name='login'),
     url(r'accounts/logout/$', 'logout', name='logout'),
     url(r'^history/$', 'history', name="history"),
+    url(r'^person/edit/(?P<person_id>\d+)/upload/$',
+        'upload',
+        name="person-upload"),
                     )

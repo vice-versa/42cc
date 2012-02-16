@@ -12,9 +12,6 @@ from tddspry.django.cases import DatabaseTestCase, HttpTestCase
 import datetime
 import shlex
 import subprocess
-from django.contrib.auth.models import User
-from django.contrib.auth import logout
-from django.contrib.sessions.models import Session
 
 
 class AdminUserTest(HttpTestCase):
@@ -70,8 +67,7 @@ class MainPageTest(HttpTestCase):
 
         self.find(person_edit_url)
 
-
-    def test_history_page_link(self): 
+    def test_history_page_link(self):
         self.go200('index')
         url = urlresolvers.reverse("history")
         self.find(url)
@@ -224,7 +220,7 @@ class EditPersonFormTest(WebTest):
 
         person = Person.objects.latest('id')
         response = self.app.get(reverse('person-edit',
-                           kwargs={'person_id': person.id}), user='admin')
+                                kwargs={'person_id': person.id}), user='admin')
 
         form = response.form
 

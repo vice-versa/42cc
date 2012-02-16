@@ -7,12 +7,11 @@ test_panov
 *.dat
 panov/media/admin_tools
 tests.txt
-tests.txt
 tests_error.txt
 tests_out.txt
 django_cache
-panov/media/images
 panov/media/cache
 django_cache
 
+panov/media/images/uploads
 panov.db
