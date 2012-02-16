@@ -15,3 +15,4 @@ panov/media/images
 panov/media/cache
 django_cache
 
+panov.db
