@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 from panov.models import Person
 from django.forms.models import ModelForm
-from django.forms.fields import ImageField
-from django.forms.widgets import ClearableFileInput, CheckboxInput
+from django.forms.fields import ImageField, DateField
+from django.forms.widgets import ClearableFileInput, CheckboxInput, DateInput
 from django.utils.html import conditional_escape
 from django.utils.safestring import mark_safe
 from django.template.loader import render_to_string
@@ -46,7 +46,24 @@ class PhotoField(ImageField):
     widget = PhotoWidget
 
 
-class PersonForm(ModelForm):
+class CalendarWidget(DateInput):
+    def __init__(self, attrs={}, format=None):
+        attrs['class'] = attrs.get('class', '') + " " + 'calendar'
+        super(CalendarWidget, self).__init__(attrs=attrs, format=format)
+
+
+class CalendarForm(ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super(CalendarForm, self).__init__(*args, **kwargs)
+        for field in self.fields.values():
+            if isinstance(field, DateField):
+                attrs = field.widget.attrs.copy()
+                format = field.widget.format
+                field.widget = CalendarWidget(attrs=attrs, format=format)
+
+
+class PersonForm(CalendarForm):
     model = Person
 
     photo = PhotoField(label=u"Photo", required=False)

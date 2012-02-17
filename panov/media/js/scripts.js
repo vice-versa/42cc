@@ -8,6 +8,14 @@ $(document).ready(function(){
     
     $('#person_form').ajaxSubmit(options)
     })
+    $( ".calendar" ).each(function(){
+        $(this).datepicker({
+            showOn: "button",
+            buttonImage: "/assets/images/calendar.gif",
+            buttonImageOnly: true,
+            dateFormat:  "yy-mm-dd",
+        });
+    })
     
 });
 
