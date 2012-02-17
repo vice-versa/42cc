@@ -9,6 +9,10 @@
   <div id="top">
     <h1>42 Coffee Cups Test Assignment</h1>
   </div>
+  <div id="loading">
+    <h1>Идет загрузка</h1>
+  </div>
+  
   <form method="POST" action="." enctype="multipart/form-data" id="person_form">
   {% csrf_token %}
   <input id="person_id" type="text" name="person_id" value="{{person.id}}" maxlength="255" style='display:none'>

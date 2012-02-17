@@ -15,6 +15,7 @@ from panov.forms import PersonForm
 from django.template.loader import render_to_string
 from django.utils import simplejson
 from django.forms.util import ErrorDict
+import time
 
 
 def index(request, template_name='index.html', extra_context={}):
@@ -118,19 +119,19 @@ def upload(request, person_id):
 
 
 def ajax_submit(request):
-    """
+    time.sleep(5)
     if not request.is_ajax():
         raise Http404()
-    """
+
     if request.method == "POST":
         person_id = request.POST.get('person_id', 1)
-        """
+
         try:
             person_id = int(person_id)
         except ValueError:
             raise Http404()
-        """
-        context = {'errors':''}
+
+        context = {'errors': ''}
         person = get_object_or_404(Person, id=person_id)
         person_form = modelform_factory(Person, form=PersonForm)
         contact_info_form = inlineformset_factory(Person, ContactInfo)

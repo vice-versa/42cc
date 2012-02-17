@@ -17,6 +17,17 @@ $(document).ready(function(){
     
         $('#person_form').ajaxSubmit(options)
     })
+
+    $('#loading')
+        .hide()  // hide it initially
+        .ajaxStart(function() {
+            $(this).show();
+        })
+        .ajaxStop(function() {
+            $(this).hide();
+        });
+})
+
     
 function showResponse(responseText, statusText, xhr, $form)  { 
     data = $.parseJSON(responseText);
@@ -35,8 +46,8 @@ function showResponse(responseText, statusText, xhr, $form)  {
         $($form).find('.preview').replaceWith(data.msg);
     }
     }
-})
-
+    
+    
 function showErrorsResponse(responseText, statusText, xhr, $form)  { 
     data = $.parseJSON(responseText);
     $($form).find('table').find('.errorlist').remove()                
