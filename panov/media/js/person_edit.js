@@ -22,9 +22,15 @@ $(document).ready(function(){
         .hide()  // hide it initially
         .ajaxStart(function() {
             $(this).show();
+            $('#person_form').find(':input').each(function(){
+                $(this).attr("disabled", "disabled");
+            })
         })
         .ajaxStop(function() {
             $(this).hide();
+            $('#person_form').find(':input').each(function(){
+                $(this).removeAttr("disabled");
+            }) 
         });
 })
 
