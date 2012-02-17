@@ -1,4 +1,8 @@
 {% extends 'base.html' %}
+{% load media %}
+{% block extra_scripts %}
+    <script type="text/javascript" src="{% media "js/person_edit.js" %}"></script>
+{% endblock %}
 
 {% block content %}
 <div id="container">
@@ -7,6 +11,7 @@
   </div>
   <form method="POST" action="." enctype="multipart/form-data" id="person_form">
   {% csrf_token %}
+  <input id="person_id" type="text" name="person_id" value="{{person.id}}" maxlength="255" style='display:none'>
 
   <div id="leftSide">
   <fieldset>

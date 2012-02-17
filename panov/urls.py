@@ -15,4 +15,8 @@ urlpatterns = patterns('panov.views',
     url(r'^person/edit/(?P<person_id>\d+)/upload/$',
         'upload',
         name="person-upload"),
+    url(r'^person/edit/ajax/submit/$',
+        'ajax_submit',
+        name="person-ajax-submit"),
+
                     )

@@ -3,17 +3,18 @@ from panov.models import Person, ContactInfo, TmpFile
 from request.models import Request
 from django.conf import settings
 
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.forms.models import modelform_factory, inlineformset_factory
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import login as generic_login
 from django.contrib.auth import logout as auth_logout
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.forms.formsets import all_valid
 from panov.forms import PersonForm
 from django.template.loader import render_to_string
 from django.utils import simplejson
+from django.forms.util import ErrorDict
 
 
 def index(request, template_name='index.html', extra_context={}):
@@ -72,6 +73,7 @@ def person_edit(request, person_id, template_name='person_edit.html',
     context = {
                'person_form': person_form,
                'contact_info_form': contact_info_form,
+               'person': person,
                }
     context.update(extra_context)
     return render(request, template_name, context)
@@ -113,3 +115,42 @@ def upload(request, person_id):
     else:
         context['errors'] = tmp_file_form.errors['photo']
     return HttpResponse(simplejson.dumps(context))
+
+
+def ajax_submit(request):
+    """
+    if not request.is_ajax():
+        raise Http404()
+    """
+    if request.method == "POST":
+        person_id = request.POST.get('person_id', 1)
+        """
+        try:
+            person_id = int(person_id)
+        except ValueError:
+            raise Http404()
+        """
+        context = {'errors':''}
+        person = get_object_or_404(Person, id=person_id)
+        person_form = modelform_factory(Person, form=PersonForm)
+        contact_info_form = inlineformset_factory(Person, ContactInfo)
+
+        data = request.POST
+        person_form = person_form(data=data, files=request.FILES,
+                                  instance=person)
+        contact_info_form = contact_info_form(data=data,
+                                              instance=person.contactinfo)
+        if not person_form.is_valid():
+            context['errors'] = []
+            context["errors"].extend([(field_name, errors)
+                                      for field_name, errors in person_form.errors.items()
+                                     ])
+        if not contact_info_form.is_valid():
+            if not context['errors']:
+                context['errors'] = []
+            for form in contact_info_form.forms:
+                context["errors"].extend([(form.prefix+ "-" + field_name, errors)
+                                      for field_name, errors in form.errors.items()
+                                     ])
+
+        return HttpResponse(simplejson.dumps(context))
