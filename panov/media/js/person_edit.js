@@ -2,7 +2,6 @@ $(document).ready(function(){
     $('#person_form').find(':input[type="text"]').each(function(){
         $(this).change(function(){
         var options = {
-            url: "/person/edit/ajax/submit/",
             success: showErrorsResponse,
             } 
         $('#person_form').ajaxSubmit(options)
