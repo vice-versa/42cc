@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 from simple_history.models import HistoricalRecords
+import request
+import positions
 
 
 class Person(models.Model):
@@ -55,4 +57,14 @@ class TmpFile(models.Model):
 
     def __unicode__(self):
         return unicode(self.photo)
+
+
+class OrderedRequest(models.Model):
+
+    request = models.OneToOneField('request.Request',
+                                   verbose_name=u'Request',)
+
+    position = positions.PositionField(verbose_name=u'Position',
+                                       default=0)
+    
 

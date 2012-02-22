@@ -9,3 +9,5 @@ django-webtest
 webtest
 pillow
 sorl-thumbnail
+PIL
+django-positions
