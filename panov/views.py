@@ -57,7 +57,7 @@ class PersonEditView(View):
 
         person_form = modelform_factory(Person, form=PersonForm)
         contact_info_form = inlineformset_factory(Person, ContactInfo,
-                                              can_delete=False)
+                                                  can_delete=False)
         return person_form, contact_info_form
 
     def get_context(self, person_id, extra_form_args={}, extra_context={}):
@@ -69,7 +69,9 @@ class PersonEditView(View):
         form_args.update(extra_form_args)
 
         person_form = person_form(**form_args)
-        contact_info_form = contact_info_form(instance=person.contactinfo)
+
+        form_args.update({'instance': person.contactinfo})
+        contact_info_form = contact_info_form(**form_args)
 
         context = {
                'person_form': person_form,
