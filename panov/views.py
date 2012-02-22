@@ -32,13 +32,14 @@ def index(request, template_name='index.html', extra_context={}):
 def request_list(request, template_name='request_list.html', extra_context={}):
 
     limit = request.GET.get('limit', settings.REQUEST_LIST_PAGE_DEFAULT_LIMIT)
-
+    order_by = request.GET.get('order_by', settings.REQUEST_LIST_PAGE_DEFAULT_ORDER_BY)
+    
     try:
         int(limit)
     except ValueError:
         pass
 
-    request_list = Request.objects.all().order_by('time')[:limit]
+    request_list = Request.objects.all().order_by(order_by)[:limit]
 
     context = {
                'request_list': request_list,

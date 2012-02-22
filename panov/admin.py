@@ -1,4 +1,4 @@
-from panov.models import ContactInfo, Person, OrderedRequest
+from panov.models import ContactInfo, Person, RequestExtension
 from django.contrib import admin
 from simple_history.admin import SimpleHistoryAdmin
 from request.admin import RequestAdmin
@@ -18,14 +18,14 @@ class PersonAdmin(SimpleHistoryAdmin):
 admin.site.register(Person, PersonAdmin)
 
 
-class OrderedRequestAdminInline(admin.TabularInline):
-    model = OrderedRequest
+class RequestExtensionAdminInline(admin.TabularInline):
+    model = RequestExtension
     extra = 0
 
 
-class OrderedRequestAdmin(RequestAdmin):
+class RequestExtensionAdmin(RequestAdmin):
 
-    inlines = [OrderedRequestAdminInline, ]
+    inlines = [RequestExtensionAdminInline, ]
 
 admin.site.unregister(Request)
-admin.site.register(Request, OrderedRequestAdmin)
+admin.site.register(Request, RequestExtensionAdmin)

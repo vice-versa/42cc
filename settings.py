@@ -176,6 +176,8 @@ if 'django-nosetests.py' in sys.argv[0]:
     LOGGING['loggers']['']['handlers'].append('file_error')
 
 REQUEST_LIST_PAGE_DEFAULT_LIMIT = 10
+REQUEST_LIST_PAGE_DEFAULT_ORDER_BY = 'time'
+
 LOGIN_REDIRECT_URL = '/'
 THUMBNAIL_DEBUG = True
 

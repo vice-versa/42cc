@@ -3,6 +3,9 @@ from django.db import models
 from simple_history.models import HistoricalRecords
 import request
 import positions
+from django.db.models.signals import post_save
+from request.models import Request
+from django.db.models.base import ModelBase
 
 
 class Person(models.Model):
@@ -59,12 +62,41 @@ class TmpFile(models.Model):
         return unicode(self.photo)
 
 
-class OrderedRequest(models.Model):
+class _RequestExtensionModelBase(ModelBase):
+    # _prepare is not part of the public API and may change
+
+    def _prepare(cls):
+        super(_RequestExtensionModelBase, cls)._prepare()
+
+        def add_extension(sender, instance, created, **kwargs):
+            if created:
+                cls.objects.create(request=instance)
+
+        # Automatically link extension when a new request is created
+        post_save.connect(add_extension, sender=Request, weak=False)
+
+
+class RequestExtensionModel(models.Model):
+
+    __metaclass__ = _RequestExtensionModelBase
 
     request = models.OneToOneField('request.Request',
-                                   verbose_name=u'Request',)
+                                   verbose_name=u'Request',
+                                   primary_key=True, parent_link=True
+                                   )
 
-    position = positions.PositionField(verbose_name=u'Position',
-                                       default=0)
-    
+    class Meta:
+        abstract = True
 
+
+class RequestExtension(RequestExtensionModel):
+
+    position = models.IntegerField(verbose_name=u'position', default=0)
+
+    def __unicode__(self):
+        return u"%s %s" % (unicode(self.request), unicode(self.priority))
+
+    class Meta:
+
+        verbose_name = u'Request extension'
+        verbose_name_plural = u'Request extensions'
