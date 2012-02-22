@@ -16,6 +16,7 @@ from django.template.loader import render_to_string
 from django.utils import simplejson
 from django.views.generic.base import View
 from django.utils.decorators import method_decorator
+from django.core.exceptions import FieldError
 
 
 def index(request, template_name='index.html', extra_context={}):
@@ -31,15 +32,21 @@ def index(request, template_name='index.html', extra_context={}):
 
 def request_list(request, template_name='request_list.html', extra_context={}):
 
+    default_order = settings.REQUEST_LIST_PAGE_DEFAULT_ORDER_BY
     limit = request.GET.get('limit', settings.REQUEST_LIST_PAGE_DEFAULT_LIMIT)
-    order_by = request.GET.get('order_by', settings.REQUEST_LIST_PAGE_DEFAULT_ORDER_BY)
-    
+    order_by = request.GET.get('order_by', default_order)
+
     try:
         int(limit)
     except ValueError:
         pass
 
-    request_list = Request.objects.all().order_by(order_by)[:limit]
+    try:
+        request_list = Request.objects.all().order_by(order_by)
+    except FieldError:
+        request_list = Request.objects.all().order_by(default_order)
+
+    request_list = request_list[:limit]
 
     context = {
                'request_list': request_list,

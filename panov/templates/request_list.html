@@ -14,6 +14,8 @@
         <th>Path</th>
         <th>Response</th>
         <th>Method</th>
+        <th>Position</th>
+        
     </tr>
     {% for req in request_list %}
     
@@ -30,6 +32,10 @@
         <td>
            {{ req.method }} 
         </td>
+        <td>
+           {{ req.requestextension.position }} 
+        </td>
+
     </tr>
     {% endfor %}
     </table>

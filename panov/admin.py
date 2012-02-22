@@ -21,6 +21,7 @@ admin.site.register(Person, PersonAdmin)
 class RequestExtensionAdminInline(admin.TabularInline):
     model = RequestExtension
     extra = 0
+    can_delete = False
 
 
 class RequestExtensionAdmin(RequestAdmin):

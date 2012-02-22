@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 from simple_history.models import HistoricalRecords
-import request
-import positions
 from django.db.models.signals import post_save
 from request.models import Request
 from django.db.models.base import ModelBase
@@ -94,7 +92,7 @@ class RequestExtension(RequestExtensionModel):
     position = models.IntegerField(verbose_name=u'position', default=0)
 
     def __unicode__(self):
-        return u"%s %s" % (unicode(self.request), unicode(self.priority))
+        return u"%s %s" % (unicode(self.request), unicode(self.position))
 
     class Meta:
 
