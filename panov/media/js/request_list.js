@@ -1,4 +1,9 @@
-$(document).ready(function(){ 
+$(document).ready(function(){
+   
+    postion_form_bind_submit()
+})
+
+function postion_form_bind_submit(){
     $('.position_form').find(':input[type="text"]').each(function(){
         $(this).change(function(){
         var options = {
@@ -13,24 +18,12 @@ $(document).ready(function(){
         }
         })
     })
-})
+}
 
 function showResponse(responseText, statusText, xhr, $form)  { 
     data = $.parseJSON(responseText);
-    $('#request_list').find('.errorlist').remove()
-    if (data.errors !=''){
-        text = '<ul class="errorlist">'
-        for (var i=0; i < data.errors.length; i++) {
-          text += "<li>" + data.errors[i] + "</li>"
-          
-        };
-        text +='</ul>'
-        $($form).find('.preview').closest('td').prepend(text)
-        $($form).find('.preview').hide()    
-    }
-    else{
-        $('#request_list').replaceWith(data.request_list);
-    }
+    $('#request_list').replaceWith(data.request_list);
+    postion_form_bind_submit();
     }
 function isInteger(s)
 {

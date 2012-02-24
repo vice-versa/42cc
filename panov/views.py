@@ -83,8 +83,7 @@ class RequestListView(View):
         request_list_inline = render_to_string('request_list_inline.html',
                                                context)
         data = {
-                'errors': '',
-                 'request_list': request_list_inline,
+                'request_list': request_list_inline,
                 }
         return HttpResponse(simplejson.dumps(data))
 
