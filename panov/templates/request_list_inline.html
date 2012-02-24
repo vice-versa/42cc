@@ -1,0 +1,36 @@
+  <fieldset>
+    <legend>Request List</legend>
+    <table width="100%">
+    <tr>
+        <th>Time</th>
+        <th>Path</th>
+        <th>Response</th>
+        <th>Method</th>
+        <th>Priority</th>
+        
+    </tr>
+    {% for req in request_list %}
+    
+    <tr>
+        <td>
+           {{ req.time|date:"d m H:i:s.u" }} 
+        </td>
+        <td>
+           {{ req.path }} 
+        </td>
+        <td>
+           {{ req.response }} 
+        </td>
+        <td>
+           {{ req.method }} 
+        </td>
+        <td>
+           <form method="POST" action="." enctype="text/plain" class="position_form">
+              {{req.form.request_id}}
+              {{ req.form.priority }}
+           </form> 
+        </td>
+    </tr>
+    {% endfor %}
+    </table>
+    </fieldset>

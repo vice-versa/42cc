@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from panov.models import Person, ContactInfo, TmpFile
+from panov.models import Person, ContactInfo, TmpFile, RequestExtension
 from request.models import Request
 from django.conf import settings
 
@@ -11,7 +11,7 @@ from django.contrib.auth import logout as auth_logout
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.forms.formsets import all_valid
-from panov.forms import PersonForm
+from panov.forms import PersonForm, RequestExtensionForm
 from django.template.loader import render_to_string
 from django.utils import simplejson
 from django.views.generic.base import View
@@ -30,29 +30,85 @@ def index(request, template_name='index.html', extra_context={}):
     return render(request, template_name, context)
 
 
-def request_list(request, template_name='request_list.html', extra_context={}):
+class RequestListView(View):
 
-    default_order = settings.REQUEST_LIST_PAGE_DEFAULT_ORDER_BY
-    limit = request.GET.get('limit', settings.REQUEST_LIST_PAGE_DEFAULT_LIMIT)
-    order_by = request.GET.get('order_by', default_order)
+    def get_context(self, request, form_extra={}, extra_context={}):
 
-    try:
-        int(limit)
-    except ValueError:
-        pass
+        limit = settings.REQUEST_LIST_PAGE_LIMIT
+        order_by = settings.REQUEST_LIST_PAGE_ORDER_BY
 
-    try:
-        request_list = Request.objects.all().order_by(order_by)
-    except FieldError:
-        request_list = Request.objects.all().order_by(default_order)
+        request_list = list(Request.objects.all().order_by(order_by))
 
-    request_list = request_list[:limit]
+        request_list = request_list[:limit]
 
-    context = {
-               'request_list': request_list,
-               }
-    context.update(extra_context)
-    return render(request, template_name, context)
+        form_kwargs = {}
+
+        for request in request_list:
+            form = modelform_factory(RequestExtension, form=RequestExtensionForm)
+            form_kwargs.update({
+                                'instance': request.requestextension,
+                                'initial': {'request_id': request.id
+                                            }
+                                })
+
+            form = form(**form_kwargs)
+            setattr(request, 'form', form)
+
+        context = {
+                   'request_list': request_list,
+                   }
+        context.update(extra_context)
+        return context
+
+    def get(self, request, template_name='request_list.html', extra_context={}):
+
+        context = self.get_context(request, extra_context=extra_context)
+        return render(request, template_name, context)
+
+    def post_submit(self, request, template_name='request_list.html', extra_context={}):
+        form_extra = {'data': request.POST}
+        self.save_priority(request, form_extra)
+        context = self.get_context(request, form_extra=form_extra,
+                                   extra_context=extra_context)
+
+        return render(request, template_name, context)
+
+    def post_ajax(self, request, template_name='request_list.html',
+                        extra_context={}):
+        form_extra = {'data': request.POST}
+        form = self.save_priority(request, form_extra)
+        context = self.get_context(request, form_extra=form_extra,
+                                   extra_context=extra_context)
+
+        request_list_inline = render_to_string('request_list_inline.html',
+                                               context)
+        data = {
+                'errors': '',
+                 'request_list': request_list_inline,
+                }
+        return HttpResponse(simplejson.dumps(data))
+
+    def post(self, request, template_name='request_list.html', extra_context={}):
+
+        if request.is_ajax():
+            return self.post_ajax(request, template_name, extra_context)
+        else:
+            return self.post_submit(request, template_name, extra_context)
+
+    def save_priority(self, request, form_extra):
+
+        form = modelform_factory(RequestExtension, form=RequestExtensionForm)
+        form_instance = form(**form_extra)
+        if form_instance.is_valid():
+            req_id = form_instance.cleaned_data['request_id']
+
+        req = Request.objects.get(id=req_id)
+        form_extra.update({'instance': req.requestextension})
+        form_instance = form(**form_extra)
+        if form_instance.is_valid():
+            form_instance.save()
+
+        return form
 
 
 class PersonEditView(View):

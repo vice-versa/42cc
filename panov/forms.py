@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
-from panov.models import Person
+from panov.models import Person, RequestExtension
 from django.forms.models import ModelForm
-from django.forms.fields import ImageField, DateField
-from django.forms.widgets import ClearableFileInput, CheckboxInput, DateInput
+from django.forms.fields import ImageField, DateField, IntegerField
+from django.forms.widgets import ClearableFileInput, CheckboxInput, DateInput,\
+    TextInput
 from django.utils.html import conditional_escape
 from django.utils.safestring import mark_safe
 from django.template.loader import render_to_string
@@ -67,3 +68,12 @@ class PersonForm(CalendarForm):
     model = Person
 
     photo = PhotoField(label=u"Photo", required=False)
+
+
+class RequestExtensionForm(ModelForm):
+    model = RequestExtension
+
+    request_id = IntegerField(required=True,
+                              widget=TextInput(attrs={'style': "display:None"})
+                              )
+

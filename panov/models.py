@@ -89,10 +89,10 @@ class RequestExtensionModel(models.Model):
 
 class RequestExtension(RequestExtensionModel):
 
-    position = models.IntegerField(verbose_name=u'position', default=0)
+    priority = models.IntegerField(verbose_name=u'priority', default=0)
 
     def __unicode__(self):
-        return u"%s %s" % (unicode(self.request), unicode(self.position))
+        return u"%s %s" % (unicode(self.request), unicode(self.priority))
 
     class Meta:
 

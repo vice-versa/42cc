@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 from django.conf.urls.defaults import *
-from panov.views import PersonEditView
+from panov.views import PersonEditView, RequestListView
 
 
 urlpatterns = patterns('panov.views',
 
     url(r'^$', 'index', name="index"),
-    url(r'^request/list/$', 'request_list', name="request-list"),
+    url(r'^request/list/$', RequestListView.as_view(), name="request-list"),
     url(r'^person/edit/(?P<person_id>\d+)/$',
         PersonEditView.as_view(),
         name="person-edit"),

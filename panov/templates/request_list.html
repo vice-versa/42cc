@@ -1,45 +1,16 @@
 {% extends 'base.html' %}
+{% load media %}
+{% block extra_scripts %}
+    <script type="text/javascript" src="{% media "js/request_list.js" %}"></script>
+{% endblock %}
 
 {% block content %}
 <div id="container">
     <div id="top">
     <h1>42 Coffee Cups Test Assignment</h1>
   </div>
-  <div>
-  <fieldset>
-    <legend>Request List</legend>
-    <table width="100%">
-    <tr>
-        <th>Time</th>
-        <th>Path</th>
-        <th>Response</th>
-        <th>Method</th>
-        <th>Position</th>
-        
-    </tr>
-    {% for req in request_list %}
-    
-    <tr>
-        <td>
-           {{ req.time|date:"d m H:i:s.u" }} 
-        </td>
-        <td>
-           {{ req.path }} 
-        </td>
-        <td>
-           {{ req.response }} 
-        </td>
-        <td>
-           {{ req.method }} 
-        </td>
-        <td>
-           {{ req.requestextension.position }} 
-        </td>
-
-    </tr>
-    {% endfor %}
-    </table>
-    </fieldset>
+  <div id="request_list">
+     {% include 'request_list_inline.html' %} 
   </div>
 </div>
 
