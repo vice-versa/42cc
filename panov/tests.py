@@ -77,7 +77,7 @@ class RequestTest(HttpTestCase):
 
     def setUp(self):
 
-        limit = settings.REQUEST_LIST_PAGE_DEFAULT_LIMIT
+        limit = settings.REQUEST_LIST_PAGE_LIMIT
         self.limit = limit
         Request.objects.create(path='/first', ip='127.0.0.1')
 
