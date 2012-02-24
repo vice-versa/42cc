@@ -94,6 +94,7 @@ class RequestTest(HttpTestCase):
             self.find(str(req.path))
             self.find(str(req.response))
             self.find(str(req.method))
+            self.find(str(req.requestextension.priority))
 
 
 class PersonTest(DatabaseTestCase):
