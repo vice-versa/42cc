@@ -11,3 +11,4 @@ pillow
 sorl-thumbnail
 PIL
 django-positions
+south

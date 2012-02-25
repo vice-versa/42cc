@@ -102,6 +102,7 @@ INSTALLED_APPS = (
     'request',
     'simple_history',
     'sorl.thumbnail',
+    'south',
 
     # main
     'panov',
