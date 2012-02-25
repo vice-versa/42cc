@@ -81,7 +81,7 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'urls'
 
 
-INSTALLED_APPS = (
+INSTALLED_APPS = [
 
     # admin tools
     'admin_tools',
@@ -102,12 +102,13 @@ INSTALLED_APPS = (
     'request',
     'simple_history',
     'sorl.thumbnail',
-    'south',
+    #'south',
 
     # main
     'panov',
 
-)
+]
+
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.debug',
     'django.core.context_processors.request',
@@ -175,6 +176,10 @@ if 'django-nosetests.py' in sys.argv[0]:
     
     LOGGING['loggers']['']['handlers'].append('file_out')  
     LOGGING['loggers']['']['handlers'].append('file_error')
+
+if not 'django-nosetests.py' in sys.argv[0]:
+    INSTALLED_APPS.append('south',)
+        
 
 REQUEST_LIST_PAGE_LIMIT = 10
 REQUEST_LIST_PAGE_ORDER_BY = '-requestextension__priority'
