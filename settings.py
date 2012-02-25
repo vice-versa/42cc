@@ -177,9 +177,8 @@ if 'django-nosetests.py' in sys.argv[0]:
     LOGGING['loggers']['']['handlers'].append('file_out')  
     LOGGING['loggers']['']['handlers'].append('file_error')
 
-if not 'django-nosetests.py' in sys.argv[0]:
-    INSTALLED_APPS.append('south',)
         
+SOUTH_TESTS_MIGRATE = False
 
 REQUEST_LIST_PAGE_LIMIT = 10
 REQUEST_LIST_PAGE_ORDER_BY = '-requestextension__priority'
