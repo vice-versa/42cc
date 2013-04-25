@@ -1,7 +1,6 @@
 42 coffee cups test
 
 # 1.base
-
 Create basic django-проект that would present your name, surname, date of birth, bio, contacts on the main page. Data should be stored in the DB, that's
 * manage.py syncdb
 * manage.py runserver
@@ -10,27 +9,26 @@ Use pip requirements and virtualenv to manage your third party packages dependen
 There should be Makefile with test target running your tests (make test to verify it)
 
 #3. middleware&lists
-
 Create middleware that stores all http requests in the DB
+
 #4 . template context
-
 Create template-context-processor that adds django.settings to the context
+
 #5. forms&auth
-
 Create page with form that allows to edit data, presented on the main page
+
 #6. forms-widgets&jquery 
-
 For birth date on the same page add calendar widget
-#7.  forms-model-extra - 
 
+#7.  forms-model-extra - 
 (All previous tasks where implemented using forms.ModelForm? ;)
 let input fields order be reversed
+
 #8. template-tags 
-
 Create tag that accepts any object and renders the link to its admin edit page ({% edit_link request.user %})
+
 #9 commands 
-
 Create django command that prints all project models and the count of objects in every model
-#10 signals 
 
+#10 signals 
 Create signal processor that, for every model, creates the db entry about the object creation/editing/deletion
